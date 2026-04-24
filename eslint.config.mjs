@@ -15,6 +15,11 @@ const eslintConfig = defineConfig([
     'next-env.d.ts',
   ]),
   eslintPluginPrettierRecommended,
+  {
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
 ]);
 
 export default eslintConfig;

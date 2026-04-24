@@ -55,13 +55,12 @@
   --breakpoint-xs: 26.25rem;
 
   --background-image-auth: var(--auth);
-
+  --background-image-gradient-accent: var(--gradient-accent);
   --shadow-3xl: 0 30px 60px 0 rgb(0 0 0 / 16%);
 }
 
 :root {
   --panel: #ffffff;
-
   --background: #fdfdfd;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -75,7 +74,7 @@
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.7089 0.1967 46.81);
-  --accent-foreground: oklch(0.205 0 0);
+  --accent-foreground: theme('colors.white');
   --destructive: oklch(0.6009 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
@@ -94,8 +93,13 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-
   --auth: url('/auth-light.svg');
+  --gradient-accent: linear-gradient(
+    93deg,
+    #ff7000 -13.95%,
+    #e2985e 99.53%,
+    #e2995f 99.54%
+  );
 }
 
 .dark {
@@ -111,8 +115,6 @@
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.7089 0.1967 46.81);
-  --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.1875 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);

@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { ROUTES } from '@/constants';
+import { ROUTES } from '@/lib/constants';
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import { toast } from 'sonner';
@@ -25,7 +25,10 @@ export function SocialAuthForm() {
   };
 
   return (
-    <form className='flex flex-wrap gap-2.5' onSubmit={(e) => e.preventDefault()}>
+    <form
+      className='flex flex-wrap gap-2.5 justify-center'
+      onSubmit={(e) => e.preventDefault()}
+    >
       <Button variant='outline' type='submit' onClick={() => onAuth('github')}>
         <Image src='/github.svg' alt='Github Logomark' width={20} height={20} />
         Login with GitHub

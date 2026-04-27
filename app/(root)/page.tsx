@@ -6,12 +6,11 @@ export const metadata: Metadata = {
     'Платформа движемая сообществом для обмена знаниями и опытом в сфере разработки программного обеспечения. Задавайте вопросы, делитесь решениями и учитесь у других разработчиков. Независимо от вашего уровня опыта, DevExchange поможет вам найти ответы на ваши вопросы по различным темам: веб-разработка, мобильная разработка, базы данных, DevOps и многое другое. Присоединяйтесь к нашему сообществу и начните обмениваться знаниями уже сегодня!',
 };
 
-export default  function Home() {
-
+export default function Home() {
   return (
-    <div className='container mx-auto'>
-      <div className='mt-10 text-center text-3xl font-bold text-violet-500'>
-        Hello from /home page
+    <div className='container mx-auto px-4'>
+      <div className='mt-10 text-3xl font-bold flex flex-wrap gap-2 justify-center'>
+        Welcome to <pre className='text-accent'>/home</pre> page!
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { Header, Logo, ThemeSwitcher } from '@/components/header';
 import { NavigationButton } from '@/components/navigation';
+import { Input } from '@/components/ui/input';
 
 export default function RootLayout({
   children,
@@ -10,7 +11,7 @@ export default function RootLayout({
     <>
       <Header>
         <Logo />
-        <input type='text' placeholder='Global search...' />
+        <Input placeholder='Search something...' className='max-w-64 max-xs:hidden'/>
         <div className='flex items-center gap-2'>
           <ThemeSwitcher />
           <NavigationButton />

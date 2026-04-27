@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export function Logo() {
   return (
-    <Link href='/' className='flex items-center gap-1'>
+    <Link href='/' className='inline-flex items-center gap-1 shrink-0'>
       <Image
         src='/logomark.svg'
         alt='Site Logomark'

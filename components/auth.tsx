@@ -54,7 +54,7 @@ export function Auth<FormFields extends FieldValues>({
             {isSignUp ? 'Already have an account?' : "Don't have an account?"}
           </span>
           <Link
-            href={isSignUp ? ROUTES.SIGN_IN : ROUTES.SIGN_UP}
+            href={isSignUp ? ROUTES.signIn : ROUTES.signUp}
             className='text-accent font-medium'
           >
             {isSignUp ? 'Sign In' : 'Sign Up'}

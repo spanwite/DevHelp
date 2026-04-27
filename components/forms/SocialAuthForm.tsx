@@ -11,7 +11,7 @@ export function SocialAuthForm() {
     try {
       await signIn(provider, {
         redirect: true,
-        redirectTo: ROUTES.HOME,
+        redirectTo: ROUTES.home,
       });
     } catch (error) {
       const message =

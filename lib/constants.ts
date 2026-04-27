@@ -1,7 +1,7 @@
 import {
   BriefcaseBusinessIcon,
   HomeIcon,
-  LucideProps,
+  LucideIcon,
   MessageCircleQuestionMarkIcon,
   StarIcon,
   TagIcon,
@@ -19,48 +19,47 @@ export const ROUTES = {
   tags: '/tags',
   askQuestion: '/ask-question',
   profile: '/profile',
+  questions: '/questions',
 } as const;
 
 export const NAVIGATION_LINKS: {
   title: string;
-  href: string;
-  icon: React.ForwardRefExoticComponent<
-    Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
-  >;
+  url: string;
+  icon: LucideIcon;
 }[] = [
   {
     title: 'Home',
-    href: ROUTES.home,
+    url: ROUTES.home,
     icon: HomeIcon,
   },
   {
     title: 'Collections',
-    href: ROUTES.collections,
+    url: ROUTES.collections,
     icon: StarIcon,
   },
   {
     title: 'Find Jobs',
-    href: ROUTES.jobs,
+    url: ROUTES.jobs,
     icon: BriefcaseBusinessIcon,
   },
   {
     title: 'Tags',
-    href: ROUTES.tags,
+    url: ROUTES.tags,
     icon: TagIcon,
   },
   {
     title: 'Communities',
-    href: ROUTES.communities,
+    url: ROUTES.communities,
     icon: UsersRoundIcon,
   },
   {
     title: 'Profile',
-    href: ROUTES.profile,
+    url: ROUTES.profile,
     icon: UserIcon,
   },
   {
     title: 'Ask a Question',
-    href: ROUTES.askQuestion,
+    url: ROUTES.askQuestion,
     icon: MessageCircleQuestionMarkIcon,
   },
 ];

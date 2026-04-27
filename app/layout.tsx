@@ -26,7 +26,7 @@ export default async function AppLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth()
+  const session = await auth();
 
   return (
     <html
@@ -34,6 +34,13 @@ export default async function AppLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        <link
+          rel='stylesheet'
+          type='text/css'
+          href='https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css'
+        />
+      </head>
       <body className='flex min-h-full flex-col'>
         <AuthProvider session={session}>
           <ThemeProvider

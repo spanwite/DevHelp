@@ -13,9 +13,10 @@ import {
 import { Menu } from 'lucide-react';
 import Link from 'next/link';
 import { Logo } from '../header';
-import { NavigationList } from './NavigationList';
+import { NavMain } from './NavMain';
+import { NAVIGATION_LINKS } from '@/lib/constants';
 
-export function NavigationSheet() {
+export function NavSheet() {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -34,7 +35,7 @@ export function NavigationSheet() {
           <Logo />
         </SheetHeader>
         <nav className='grid flex-1 auto-rows-min px-4'>
-          <NavigationList shouldCloseSheet />
+          <NavMain items={NAVIGATION_LINKS} shouldCloseSheet />
         </nav>
         <SheetFooter>
           <SheetClose asChild>

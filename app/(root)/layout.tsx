@@ -1,5 +1,5 @@
 import { Header, Logo, ThemeSwitcher } from '@/components/header';
-import { NavigationButton } from '@/components/navigation';
+import { NavigationSheet, NavigationSidebar } from '@/components/navigation';
 import { Input } from '@/components/ui/input';
 
 export default function RootLayout({
@@ -9,15 +9,21 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <Header>
+      <Header className='sticky top-0 z-10'>
         <Logo />
-        <Input placeholder='Search something...' className='max-w-64 max-xs:hidden'/>
+        <Input
+          placeholder='Search something...'
+          className='max-xs:hidden max-w-64'
+        />
         <div className='flex items-center gap-2'>
           <ThemeSwitcher />
-          <NavigationButton />
+          <NavigationSheet />
         </div>
       </Header>
-      <main>{children}</main>
+      <div className='flex flex-1'>
+        <NavigationSidebar />
+        <main className='flex-1'>{children}</main>
+      </div>
     </>
   );
 }

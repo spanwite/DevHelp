@@ -1,3 +1,3 @@
-export { Header } from './header';
-export { Logo } from './logo'; 
-export { ThemeSwitcher } from './theme-switcher';
+export { Header } from './Header';
+export { Logo } from './Logo'; 
+export { ThemeSwitcher } from './ThemeSwitcher';

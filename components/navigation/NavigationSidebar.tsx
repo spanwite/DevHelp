@@ -18,7 +18,7 @@ export function NavigationSidebar({
   return (
     <aside
       className={cn(
-        'border-input bg-background sticky top-(--header-height) flex max-h-[calc(100vh-var(--header-height))] max-w-3xs flex-col justify-between gap-4 overflow-y-auto p-4 max-sm:hidden',
+        'border-input bg-background sticky top-(--header-height) flex max-h-[calc(100vh-var(--header-height))] flex-1 max-w-56 flex-col justify-between gap-4 overflow-y-auto p-4 max-sm:hidden',
         side === 'right' && 'right-0 border-l',
         side === 'left' && 'left-0 border-r',
         className

@@ -1,11 +1,13 @@
+'use client'
+
 import { ROUTES } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { Link } from '@/components/ui/link';
 import { FieldValues } from 'react-hook-form';
 import { type ZodType } from 'zod/v3';
-import { AuthForm } from './forms/AuthForm';
-import { SocialAuthForm } from './forms/SocialAuthForm';
+import { BasicAuthForm } from './BasicAuthForm';
+import { SocialAuthForm } from './SocialAuthForm';
 import {
   Card,
   CardContent,
@@ -13,9 +15,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from './ui/card';
+} from '@/components/ui/card';
 
-export function Auth<FormFields extends FieldValues>({
+export function AuthCard<FormFields extends FieldValues>({
   className,
   schema,
   defaultValues,
@@ -46,7 +48,7 @@ export function Auth<FormFields extends FieldValues>({
         />
       </CardHeader>
       <CardContent>
-        <AuthForm schema={schema} defaultValues={defaultValues} />
+        <BasicAuthForm schema={schema} defaultValues={defaultValues} />
       </CardContent>
       <CardFooter className='flex-col gap-4'>
         <div className='flex flex-wrap items-center justify-center'>

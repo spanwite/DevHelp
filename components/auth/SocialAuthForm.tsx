@@ -25,9 +25,8 @@ export function SocialAuthForm() {
   };
 
   return (
-    <form
+    <div
       className='flex flex-wrap gap-2.5 justify-center'
-      onSubmit={(e) => e.preventDefault()}
     >
       <Button variant='outline' type='submit' onClick={() => onAuth('github')}>
         <Image src='/github.svg' alt='Github Logomark' width={20} height={20} />
@@ -44,6 +43,6 @@ export function SocialAuthForm() {
         />
         Login with Google
       </Button>
-    </form>
+    </div>
   );
 }

@@ -19,7 +19,7 @@ import {
 import { toast } from 'sonner';
 import { type ZodType } from 'zod/v3';
 
-export function AuthForm<FormFields extends FieldValues>({
+export function BasicAuthForm<FormFields extends FieldValues>({
   schema,
   defaultValues,
 }: {

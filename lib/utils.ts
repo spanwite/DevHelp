@@ -14,32 +14,30 @@ export function joinUrl(base: string, path: string): string {
   return `${base.replace(/\/+$/, '')}/${path.replace(/^\/+/, '')}`;
 }
 
-export function getDeviconClass(iconName: string): string {
-  iconName = formatIconName(iconName);
-  iconName = mapIconName(iconName);
-
-  return cn(
-    `devicon-${iconName}-original`,
-    `devicon-${iconName}-plain`,
-    'colored'
-  );
+export function getDeviconUrl(iconName: string): string {
+  iconName = getDeviconName(iconName);
+  return `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${iconName}/${iconName}-original.svg`;
 }
 
-function formatIconName(name: string): string {
-  return name
+export function getDeviconName(iconName: string): string {
+  iconName = iconName
     .trim()
     .toLowerCase()
     .replaceAll(/[\s.]/g, '')
     .replaceAll(/\+/g, 'plus')
     .replaceAll(/#/g, 'sharp');
-}
-
-function mapIconName(iconName: string): string {
   const mapping: Record<string, string> = {
     css: 'css3',
     html: 'html5',
-    js: 'javascript',
-    ts: 'typescript',
   };
   return mapping[iconName] || iconName;
+}
+
+export async function resourceExists(url: string): Promise<boolean> {
+  try {
+    const response = await fetch(url, { method: 'HEAD' });
+    return response.ok;
+  } catch {
+    return false;
+  }
 }

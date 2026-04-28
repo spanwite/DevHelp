@@ -1,5 +1,6 @@
 import { ROUTES } from '@/lib/constants';
-import { getDeviconClass, joinUrl } from '@/lib/utils';
+import { getDeviconUrl, joinUrl, resourceExists } from '@/lib/utils';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useId } from 'react';
 import { Badge } from '../ui/badge';
@@ -27,7 +28,7 @@ export function NavTags({
   );
 }
 
-export function TechTag({
+export async function TechTag({
   title,
   id,
   count,
@@ -36,10 +37,15 @@ export function TechTag({
   id: string;
   count: string | number;
 }) {
+  const iconUrl = getDeviconUrl(title);
+  const iconExists = await resourceExists(iconUrl);
+
   return (
     <Badge variant='secondary' className='' asChild>
       <Link href={joinUrl(ROUTES.tags, id)}>
-        <i className={getDeviconClass(title)} />
+        {iconExists && (
+          <Image src={iconUrl} alt={`${title} icon`} width={14} height={14} />
+        )}
         {title}
         <div className='text-muted-foreground text-xs'>{count}</div>
       </Link>

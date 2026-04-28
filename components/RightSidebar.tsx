@@ -1,5 +1,3 @@
-'use client';
-
 import { NavQuestions } from './navigation/NavQuestions';
 import { NavTags } from './navigation/NavTags';
 import { Sidebar } from './ui/sidebar';
@@ -29,6 +27,7 @@ const data = {
     { id: '5', title: 'Next.js', count: 85 },
     { id: '3', title: 'CSS', count: 80 },
     { id: '4', title: 'Node.js', count: 60 },
+    { id: '6', title: 'React-Query', count: 70 },
   ],
 };
 

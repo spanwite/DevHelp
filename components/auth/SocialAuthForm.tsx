@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '../ui/button';
 import { ROUTES } from '@/lib/constants';
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';

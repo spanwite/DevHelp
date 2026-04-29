@@ -1,8 +1,6 @@
-import { Header, Logo, ThemeSwitcher } from '@/components/header';
-import { LeftSidebar } from '@/components/LeftSidebar';
-import { NavSheet } from '@/components/navigation';
-import { RightSidebar } from '@/components/RightSidebar';
-import { Input } from '@/components/ui/input';
+import { Header } from '@/components/layout/Header';
+import { MainSidebar } from '@/components/layout/MainSidebar';
+import { SecondarySidebar } from '@/components/layout/SecondarySidebar';
 
 export default function RootLayout({
   children,
@@ -11,21 +9,11 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <Header className='sticky top-0 z-10'>
-        <Logo />
-        <Input
-          placeholder='Search something...'
-          className='max-xs:hidden max-w-64'
-        />
-        <div className='flex items-center gap-2'>
-          <ThemeSwitcher />
-          <NavSheet />
-        </div>
-      </Header>
+      <Header />
       <div className='flex flex-1'>
-        <LeftSidebar />
+        <MainSidebar />
         <main className='flex-1'>{children}</main>
-        <RightSidebar />
+        <SecondarySidebar />
       </div>
     </>
   );

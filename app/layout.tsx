@@ -1,10 +1,10 @@
+import { auth } from '@/auth';
 import { AuthProvider } from '@/components/auth';
-import { ThemeProvider } from '@/components/providers/theme-provider';
+import { ThemeProvider } from '@/components/theme';
 import { Toaster } from '@/components/ui/sonner';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { auth } from '@/auth';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',

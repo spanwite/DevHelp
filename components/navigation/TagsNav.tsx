@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useId } from 'react';
 import { Badge } from '../ui/badge';
 
-export function NavTags({
+export function TagsNav({
   items,
 }: {
   items: { id: string; title: string; count: string | number }[];

@@ -3,18 +3,18 @@
 import { LogIn, LogOut, UserRoundPlus } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { Button } from './ui/button';
-import { Sidebar } from './ui/sidebar';
-import { NavMain } from './navigation';
+import { Button } from '../ui/button';
+import { Sidebar } from '../ui/sidebar';
+import { MainNav } from '../navigation';
 import { NAVIGATION_LINKS } from '@/lib/constants';
 
-export function LeftSidebar() {
+export function MainSidebar() {
   const session = useSession();
   const isAuthenticated = session.status === 'authenticated';
 
   return (
     <Sidebar side='left' className='justify-between'>
-      <NavMain items={NAVIGATION_LINKS} />
+      <MainNav items={NAVIGATION_LINKS} />
       {isAuthenticated ? (
         <Button
           className='w-full justify-start'

@@ -1,6 +1,5 @@
-import { NavQuestions } from './navigation/NavQuestions';
-import { NavTags } from './navigation/NavTags';
-import { Sidebar } from './ui/sidebar';
+import { QuestionsNav, TagsNav } from '../navigation';
+import { Sidebar } from '../ui/sidebar';
 
 const data = {
   questions: [
@@ -31,11 +30,11 @@ const data = {
   ],
 };
 
-export function RightSidebar() {
+export function SecondarySidebar() {
   return (
     <Sidebar side='right' className='max-w-64'>
-      <NavQuestions items={data.questions} />
-      <NavTags items={data.tags} />
+      <QuestionsNav items={data.questions} />
+      <TagsNav items={data.tags} />
     </Sidebar>
   );
 }

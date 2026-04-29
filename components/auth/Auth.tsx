@@ -3,7 +3,7 @@
 import { ROUTES } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import { Link } from '@/components/ui/link';
+import { Link } from '../ui/link';
 import { FieldValues } from 'react-hook-form';
 import { type ZodType } from 'zod/v3';
 import { BasicAuthForm } from './BasicAuthForm';
@@ -17,7 +17,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-export function AuthCard<FormFields extends FieldValues>({
+export function Auth<FormFields extends FieldValues>({
   className,
   schema,
   defaultValues,

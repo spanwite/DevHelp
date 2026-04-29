@@ -12,8 +12,8 @@ import {
 } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
 import Link from 'next/link';
-import { Logo } from '../header';
-import { NavMain } from './NavMain';
+import { Logo } from '../ui/Logo';
+import { MainNav } from '../navigation';
 import { NAVIGATION_LINKS } from '@/lib/constants';
 
 export function NavSheet() {
@@ -35,7 +35,7 @@ export function NavSheet() {
           <Logo />
         </SheetHeader>
         <nav className='grid flex-1 auto-rows-min px-4'>
-          <NavMain items={NAVIGATION_LINKS} shouldCloseSheet />
+          <MainNav items={NAVIGATION_LINKS} shouldCloseSheet />
         </nav>
         <SheetFooter>
           <SheetClose asChild>

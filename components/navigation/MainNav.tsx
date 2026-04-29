@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useId } from 'react';
 
-export function NavMain({
+export function MainNav({
   items,
   shouldCloseSheet = false,
 }: {

@@ -3,13 +3,13 @@
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
-import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '../ui/dropdown-menu';
+import { Button } from '../ui/button';
 
 export function ThemeSwitcher() {
   const { setTheme } = useTheme();
@@ -23,7 +23,7 @@ export function ThemeSwitcher() {
           <span className='sr-only'>Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent side='bottom'  align='end'>
+      <DropdownMenuContent side='bottom' align='end'>
         <DropdownMenuItem onClick={() => setTheme('light')}>
           Light
         </DropdownMenuItem>

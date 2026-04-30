@@ -10,7 +10,7 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from '../ui/input-group';
-import { updateSearchParam } from '@/lib/url';
+import { formSearchParamsUrl } from '@/lib/url';
 
 const QUERY_PARAM = 'query';
 
@@ -27,7 +27,11 @@ export function UrlSearch({
   const debouncedQuery = useDebounce(query, 500);
 
   useEffect(() => {
-    router.push(updateSearchParam(QUERY_PARAM, debouncedQuery));
+    const url = formSearchParamsUrl({
+      name: QUERY_PARAM,
+      value: debouncedQuery,
+    });
+    router.push(url, { scroll: false });
   }, [debouncedQuery, router]);
 
   return (

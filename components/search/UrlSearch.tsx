@@ -2,12 +2,21 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
-import { Search } from './Search';
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from '../ui/input-group';
+import { Search } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const DEBOUNCE_DELAY = 500;
 const QUERY_PARAM = 'query';
 
-export function UrlSearch({ ...props }: React.ComponentProps<typeof Search>) {
+export function UrlSearch({
+  className,
+  ...props
+}: React.ComponentProps<typeof InputGroupInput>) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -37,10 +46,15 @@ export function UrlSearch({ ...props }: React.ComponentProps<typeof Search>) {
   }, [searchParams, searchQuery, createQueryString, router]);
 
   return (
-    <Search
-      value={searchQuery}
-      onInput={(e) => setSearchQuery(e.currentTarget.value)}
-      {...props}
-    />
+    <InputGroup className={cn('border-transparent bg-secondary h-14', className)}>
+      <InputGroupInput
+        {...props}
+        value={searchQuery}
+        onInput={(e) => setSearchQuery(e.currentTarget.value)}
+      />
+      <InputGroupAddon className='pl-4 pr-1.5'>
+        <Search className='size-5' />
+      </InputGroupAddon>
+    </InputGroup>
   );
 }

@@ -1,9 +1,9 @@
 'use client';
 
 import { Auth } from '@/components/auth';
-import { signInSchema } from '@/lib/schemas';
+import { signInSchema } from '@/lib/schemas/auth';
 
-export default function SignUp() {
+export default function SignIn() {
   return (
     <Auth schema={signInSchema} defaultValues={{ email: '', password: '' }} />
   );

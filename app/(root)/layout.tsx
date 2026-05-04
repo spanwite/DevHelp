@@ -12,7 +12,9 @@ export default function RootLayout({
       <Header />
       <div className='flex flex-1'>
         <MainSidebar />
-        <main className='flex-1'>{children}</main>
+        <main className='xs:px-9 mx-auto max-w-7xl flex-1 px-4 py-16'>
+          {children}
+        </main>
         <SecondarySidebar />
       </div>
     </>

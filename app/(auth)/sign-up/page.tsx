@@ -1,7 +1,7 @@
 'use client';
 
 import { Auth } from '@/components/auth';
-import { signUpSchema } from '@/lib/schemas';
+import { signUpSchema } from '@/lib/schemas/auth';
 
 export default function SignUp() {
   return (

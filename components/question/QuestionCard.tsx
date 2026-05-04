@@ -4,11 +4,11 @@ import { Question } from '@/types';
 import { Dot, Eye, MessageCircle, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
 import { format } from 'timeago.js';
-import { TechBadge } from './TechBadge';
-import { Avatar, AvatarImage } from './ui/avatar';
-import { Card, CardContent, CardHeader } from './ui/card';
-import { Metric } from './ui/Metric';
-import { Button } from './ui/button';
+import { TechBadge } from '../TechBadge';
+import { Avatar, AvatarImage } from '../ui/avatar';
+import { Card, CardContent, CardHeader } from '../ui/card';
+import { Metric } from '../ui/Metric';
+import { Button } from '../ui/button';
 
 export function QuestionCard({ data }: { data: Question }) {
   return (

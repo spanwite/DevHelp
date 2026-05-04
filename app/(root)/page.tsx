@@ -4,7 +4,7 @@ import { ROUTES } from '@/lib/constants';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { data } from './data';
-import { QuestionCard } from '@/components/QuestionCard';
+import { QuestionCard } from '@/components/question';
 
 export const metadata: Metadata = {
   title: 'DevExchange',
@@ -21,7 +21,7 @@ export default async function Home({
   const { query, filter } = await searchParams;
 
   return (
-    <section className='mx-auto max-w-7xl space-y-6 px-4 xs:px-9 py-16'>
+    <section className='space-y-6'>
       <div className='flex items-center justify-between flex-wrap gap-4'>
         <h1 className='text-3xl font-bold'>All Questions</h1>
         <Button variant='gradient-accent' size='lg' className='max-xs:flex-1' asChild>

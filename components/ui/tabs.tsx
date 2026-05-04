@@ -25,17 +25,17 @@ function Tabs({
 }
 
 const tabsListVariants = cva(
-  'group/tabs-list inline-flex w-fit items-center justify-center rounded-lg text-muted-foreground group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col data-[variant=line]:rounded-none',
+  'group/tabs-list  w-fit items-center justify-center rounded-lg text-muted-foreground group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col data-[variant=line]:rounded-none',
   {
     variants: {
       variant: {
-        default: 'bg-muted',
-        line: 'gap-1 bg-transparent',
-        button: 'gap-1 bg-transparent',
+        default: 'bg-muted inline-flex',
+        line: 'gap-1 bg-transparent inline-flex',
+        button: 'gap-1 bg-transparent flex',
       },
       size: {
         sm: 'h-8 p-0.75 group-data-horizontal/tabs:h-8',
-        default: 'h-10.5 gap-3',
+        default: 'gap-3',
       },
     },
     defaultVariants: {
@@ -76,7 +76,7 @@ function TabsTrigger({
         'data-active:bg-background data-active:text-foreground dark:data-active:border-input dark:data-active:bg-input/30 dark:data-active:text-foreground',
         'after:bg-foreground after:absolute after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:-bottom-1.25 group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 group-data-[variant=line]/tabs-list:data-active:after:opacity-100',
         'group-data-[variant=button]/tabs-list:data-active:bg-accent-muted group-data-[variant=button]/tabs-list:data-active:text-accent group-data-[variant=button]/tabs-list:bg-muted group-data-[variant=button]/tabs-list:text-muted-foreground',
-        'group-data-[size=default]/tabs-list:px-6',
+        'group-data-[size=default]/tabs-list:xs:px-6 group-data-[size=default]/tabs-list:h-10.5',
         className
       )}
       {...props}

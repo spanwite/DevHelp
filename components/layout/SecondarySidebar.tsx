@@ -21,12 +21,12 @@ const data = {
     },
   ],
   tags: [
-    { id: '1', title: 'JavaScript', count: 120 },
-    { id: '2', title: 'React', count: 95 },
-    { id: '5', title: 'Next.js', count: 85 },
-    { id: '3', title: 'CSS', count: 80 },
-    { id: '4', title: 'Node.js', count: 60 },
-    { id: '6', title: 'React-Query', count: 70 },
+    { id: '1', name: 'JavaScript', count: 120 },
+    { id: '2', name: 'React', count: 95 },
+    { id: '5', name: 'Next.js', count: 85 },
+    { id: '3', name: 'CSS', count: 80 },
+    { id: '4', name: 'Node.js', count: 60 },
+    { id: '6', name: 'React-Query', count: 70 },
   ],
 };
 

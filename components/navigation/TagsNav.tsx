@@ -1,14 +1,10 @@
-import { ROUTES } from '@/lib/constants';
-import { getDeviconUrl, joinUrl, resourceExists } from '@/lib/utils';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useId } from 'react';
-import { Badge } from '../ui/badge';
+import { TechBadge } from '../TechBadge';
 
 export function TagsNav({
   items,
 }: {
-  items: { id: string; title: string; count: string | number }[];
+  items: { id: string | number; name: string; count: string | number }[];
 }) {
   const titleId = useId();
 
@@ -18,9 +14,9 @@ export function TagsNav({
         Popular Tags
       </h2>
       <ul className='flex flex-wrap gap-2'>
-        {items.map((item) => (
-          <li key={item.id} className='flex items-center justify-between gap-2'>
-            <TechTag {...item} />
+        {items.map((tag) => (
+          <li key={tag.id} className='flex items-center justify-between gap-2'>
+            <TechBadge data={tag} />
           </li>
         ))}
       </ul>
@@ -28,27 +24,3 @@ export function TagsNav({
   );
 }
 
-export async function TechTag({
-  title,
-  id,
-  count,
-}: {
-  title: string;
-  id: string;
-  count: string | number;
-}) {
-  const iconUrl = getDeviconUrl(title);
-  const iconExists = await resourceExists(iconUrl);
-
-  return (
-    <Badge variant='secondary' className='' asChild>
-      <Link href={joinUrl(ROUTES.tags, id)}>
-        {iconExists && (
-          <Image src={iconUrl} alt={`${title} icon`} width={14} height={14} />
-        )}
-        {title}
-        <div className='text-muted-foreground text-xs'>{count}</div>
-      </Link>
-    </Badge>
-  );
-}

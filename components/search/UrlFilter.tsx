@@ -38,7 +38,7 @@ export function UrlFilter({
       value={selected}
       activationMode='manual'
     >
-      <TabsList variant='button'>
+      <TabsList variant='button' className='flex-wrap'>
         {items.map((item) => (
           <TabsTrigger
             key={item.value}

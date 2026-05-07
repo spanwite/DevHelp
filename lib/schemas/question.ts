@@ -21,3 +21,5 @@ export const questionSchema = z.object({
     .min(1, 'At least one tag is required.')
     .max(5, 'You can add up to 5 tags.'),
 });
+
+export type QuestionFormData = z.infer<typeof questionSchema>;

@@ -1,9 +1,9 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { questionSchema } from '@/lib/schemas/question';
+import { QuestionFormData, questionSchema } from '@/lib/schemas/question';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useId } from 'react';
+import { useId, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
   Field,
@@ -13,6 +13,8 @@ import {
   FieldLabel,
 } from '../ui/field';
 import { Input } from '../ui/input';
+import { Editor } from '../editor';
+import { MDXEditorMethods } from '@mdxeditor/editor';
 
 export function QuestionForm() {
   const form = useForm({
@@ -29,12 +31,17 @@ export function QuestionForm() {
     description: `${formId}-description`,
     tags: `${formId}-tags`,
   };
+  const editorRef = useRef<MDXEditorMethods>(null);
+
+  const onSubmit = (data: QuestionFormData) => {
+    // TODO: Implement form submission logic
+  };
 
   return (
     <form
       className='flex flex-col gap-6'
       id={formId}
-      onSubmit={form.handleSubmit(() => {})}
+      onSubmit={form.handleSubmit(onSubmit)}
     >
       <FieldGroup>
         <Controller
@@ -68,13 +75,7 @@ export function QuestionForm() {
               <FieldLabel htmlFor={controlIds.description} required>
                 Detailed explanation of your problem?
               </FieldLabel>
-              <Input
-                {...field}
-                id={controlIds.description}
-                aria-invalid={fieldState.invalid}
-                autoComplete='off'
-                required
-              />
+              <Editor {...field} markdown={field.value} ref={editorRef} />
               <FieldDescription>
                 Introduce the problem and expand on what you put in the title.
                 Minimum 20 characters.

@@ -52,7 +52,7 @@ function FieldGroup({ className, ...props }: React.ComponentProps<'div'>) {
 }
 
 const fieldVariants = cva(
-  'group/field flex w-full gap-2 data-[invalid=true]:text-destructive',
+  'group/field flex w-full gap-2.5 data-[invalid=true]:text-destructive',
   {
     variants: {
       orientation: {
@@ -227,23 +227,6 @@ function FieldError({
   );
 }
 
-function FieldRequiredIndicator({
-  className,
-  children = '*',
-  ...props
-}: React.ComponentProps<'span'>) {
-  return (
-    <span
-      data-slot='field-required-indicator'
-      className={cn('text-destructive', className)}
-      aria-hidden='true'
-      {...props}
-    >
-      {children}
-    </span>
-  );
-}
-
 export {
   Field,
   FieldLabel,
@@ -255,5 +238,4 @@ export {
   FieldSet,
   FieldContent,
   FieldTitle,
-  FieldRequiredIndicator,
 };

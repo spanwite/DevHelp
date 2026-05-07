@@ -8,7 +8,7 @@ export function Header() {
   return (
     <header
       className={cn(
-        'border-input bg-background sticky top-0 z-10 flex h-(--header-height) items-center justify-between gap-2 border-b px-7'
+        'border-input bg-background sticky top-0 flex h-(--header-height) items-center justify-between gap-2 border-b px-7'
       )}
     >
       <Logo />

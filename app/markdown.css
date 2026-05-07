@@ -1,0 +1,66 @@
+.mdxeditor {
+  @apply border-input dark:bg-input/30 dark:disabled:bg-input/80 max-h-[70vh] w-full max-w-full overflow-auto rounded-lg border;
+
+  &:has(.markdown-content-editable:focus-visible) {
+    @apply border-ring ring-ring/50 ring-3;
+  }
+
+  .mdxeditor-toolbar {
+    @apply rounded-[inherit];
+  }
+
+  .markdown-content-editable,
+  .mdxeditor-source-editor .cm-content {
+    @apply min-h-48 max-w-full min-w-lg;
+  }
+
+  [class*='codeMirrorWrapper'] {
+    @apply p-0;
+
+    .cm-content {
+      @apply min-h-16 text-sm;
+    }
+  }
+
+  [class*='listItemUnchecked'],
+  [class*='listItemChecked'] {
+    &::after {
+      @apply top-1/2 -translate-y-2/3;
+    }
+    &::before {
+      @apply top-1/2 -translate-y-1/2;
+    }
+  }
+}
+
+[data-invalid='true'] .mdxeditor {
+  @apply border-destructive ring-destructive/20 dark:border-destructive/50 dark:ring-destructive/40 ring-3;
+}
+
+.mdxeditor.markdown-editor,
+.mdxeditor-popup-container.markdown-editor {
+  --font-mono: var(--font-mono) !important;
+  --font-body: var(--font-sans);
+  --basePageBg: var(--background);
+}
+
+.cm-editor {
+  @apply bg-transparent;
+
+  .cm-scroller {
+    @apply font-mono;
+  }
+
+  .cm-gutters {
+    @apply relative! font-mono;
+  }
+
+  .cm-gutterElement,
+  .cm-gutter {
+    @apply text-muted-foreground bg-transparent text-sm;
+  }
+
+  .cm-content {
+    @apply text-base;
+  }
+}

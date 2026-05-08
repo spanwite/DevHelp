@@ -8,6 +8,7 @@ import {
   UserIcon,
   UsersRoundIcon,
 } from 'lucide-react';
+import { joinUrl } from './utils';
 
 export const ROUTES = {
   home: '/',
@@ -20,6 +21,10 @@ export const ROUTES = {
   askQuestion: '/ask-question',
   profile: '/profile',
   questions: '/questions',
+
+  tag(id: string | number) {
+    return joinUrl(this.tags, id.toString());
+  },
 } as const;
 
 export const NAVIGATION_LINKS: {

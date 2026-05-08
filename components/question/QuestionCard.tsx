@@ -1,14 +1,15 @@
 import { ROUTES } from '@/lib/constants';
-import { joinUrl } from '@/lib/utils';
+import { getDeviconUrl, joinUrl } from '@/lib/utils';
 import { Question } from '@/types';
 import { Dot, Eye, MessageCircle, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
 import { format } from 'timeago.js';
-import { TechBadge } from '../TechBadge';
 import { Avatar, AvatarImage } from '../ui/avatar';
 import { Card, CardContent, CardHeader } from '../ui/card';
 import { Metric } from '../ui/Metric';
 import { Button } from '../ui/button';
+import { Badge } from '../ui/badge';
+import MaybeImage from '../utils/MaybeImage.server';
 
 export function QuestionCard({ data }: { data: Question }) {
   return (
@@ -25,7 +26,17 @@ export function QuestionCard({ data }: { data: Question }) {
         <ul className='flex flex-wrap gap-2'>
           {data.tags.map((tag) => (
             <li key={tag.id}>
-              <TechBadge data={tag} withIcon={false} />
+              <Badge variant='secondary' asChild>
+                <Link href={ROUTES.tag(tag.id)}>
+                  <MaybeImage
+                    src={getDeviconUrl(tag.name)}
+                    alt={tag.name}
+                    width={14}
+                    height={14}
+                  />
+                  <span>{tag.name}</span>
+                </Link>
+              </Badge>
             </li>
           ))}
         </ul>

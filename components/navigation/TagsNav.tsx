@@ -1,5 +1,9 @@
 import { useId } from 'react';
-import { TechBadge } from '../TechBadge';
+import { Badge } from '../ui/badge';
+import Link from 'next/link';
+import { ROUTES } from '@/lib/constants';
+import MaybeImage from '../utils/MaybeImage.server';
+import { getDeviconUrl } from '@/lib/utils';
 
 export function TagsNav({
   items,
@@ -16,11 +20,23 @@ export function TagsNav({
       <ul className='flex flex-wrap gap-2'>
         {items.map((tag) => (
           <li key={tag.id} className='flex items-center justify-between gap-2'>
-            <TechBadge data={tag} />
+            <Badge variant='secondary' asChild>
+              <Link href={ROUTES.tag(tag.id)}>
+                <MaybeImage
+                  src={getDeviconUrl(tag.name)}
+                  alt={tag.name}
+                  width={14}
+                  height={14}
+                />
+                <span>{tag.name}</span>
+                <span className='text-muted-foreground text-xs'>
+                  {tag.count}
+                </span>
+              </Link>
+            </Badge>
           </li>
         ))}
       </ul>
     </nav>
   );
 }
-

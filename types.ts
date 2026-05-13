@@ -20,3 +20,17 @@ export type Question = {
   answers: number;
   views: number;
 };
+
+export type ApiResponse<T> = {
+  success: boolean;
+  data?: T;
+  error?: string;
+};
+
+export function createApiResponse<T>(
+  success: boolean,
+  data?: T,
+  error?: string
+): ApiResponse<T> {
+  return { success, data, error };
+}

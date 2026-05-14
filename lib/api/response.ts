@@ -69,19 +69,24 @@ export function formErrorResponse(
     ...defaultErrorResponseOptions,
     ...options,
   };
-  const resolvedParams = {
+  const { code, message, statusCode, type, details, requestId } = {
     ...defaultErrorResponseParams,
     ...params,
   };
+  console.log(params);
   return NextResponse.json<ApiErrorResponse>(
     {
       success: false,
       error: {
-        ...resolvedParams,
-        details: includeDetails ? resolvedParams.details : undefined,
+        message,
+        type,
+        code,
+        statusCode,
+        details: includeDetails ? details : undefined,
+        requestId,
       },
     },
-    { status: resolvedParams.statusCode }
+    { status: statusCode }
   );
 }
 

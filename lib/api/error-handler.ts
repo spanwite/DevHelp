@@ -30,7 +30,11 @@ export function handleError(
       requestId,
     });
     return formErrorResponse({
-      ...error,
+      type: error.type,
+      code: error.code,
+      statusCode: error.statusCode,
+      message: error.message,
+      details: error.details,
       requestId,
     });
   }

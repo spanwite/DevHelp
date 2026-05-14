@@ -34,7 +34,7 @@ export class AppError extends Error {
 }
 
 export class ValidationError extends AppError {
-  constructor(message: string, details?: ErrorDetails) {
+  constructor(message: string = 'Validation failed', details?: ErrorDetails) {
     super(
       message,
       ERROR_TYPES.VALIDATION,

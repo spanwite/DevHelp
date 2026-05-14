@@ -24,7 +24,7 @@ export async function parseSchema<T>(
   if (success) {
     return validatedData;
   }
-  throw new ValidationError('Validation failed', {
+  throw new ValidationError('Schema validation failed', {
     fields: error.flatten().fieldErrors,
   });
 }

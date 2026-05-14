@@ -108,3 +108,41 @@ export class ConflictError extends AppError {
     this.name = 'ConflictError';
   }
 }
+
+export class TimeoutError extends AppError {
+  constructor(timeout: number, details?: ErrorDetails) {
+    super(
+      `Request timeout after ${timeout}ms`,
+      ERROR_TYPES.INTERNAL_SERVER,
+      408,
+      ERROR_CODES.TIMEOUT_ERROR,
+      { ...details, timeout }
+    );
+    this.name = 'TimeoutError';
+  }
+}
+
+export class NetworkError extends AppError {
+  constructor(message: string = 'Network error', details?: ErrorDetails) {
+    super(
+      message,
+      ERROR_TYPES.INTERNAL_SERVER,
+      0,
+      ERROR_CODES.NETWORK_ERROR,
+      details
+    );
+    this.name = 'NetworkError';
+  }
+}
+
+export class ApiError extends AppError {
+  constructor(
+    message: string,
+    statusCode: number = 500,
+    code: ErrorCode = ERROR_CODES.API_ERROR,
+    details?: ErrorDetails
+  ) {
+    super(message, ERROR_TYPES.INTERNAL_SERVER, statusCode, code, details);
+    this.name = 'ApiError';
+  }
+}

@@ -10,8 +10,12 @@ export function capitalizeFirstLetter(string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export function joinUrl(base: string, path: string): string {
-  return `${base.replace(/\/+$/, '')}/${path.replace(/^\/+/, '')}`;
+function removeTrailingSlash(url: string): string {
+  return url.replace(/\/+$/, '');
+}
+
+export function joinUrl(...paths: string[]): string {
+  return paths.map(removeTrailingSlash).join('/');
 }
 
 export function getDeviconUrl(iconName: string): string {

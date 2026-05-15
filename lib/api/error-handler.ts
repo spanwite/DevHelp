@@ -99,7 +99,11 @@ export function withErrorHandler<Context extends object>(
     try {
       return await handler(request, context);
     } catch (error) {
-      return handleError(error, options);
+      const requestId = request.headers.get('x-request-id');
+      return handleError(error, {
+        ...(requestId ? { requestId } : {}),
+        ...options,
+      });
     }
   };
 }

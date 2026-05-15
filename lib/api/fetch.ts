@@ -227,9 +227,10 @@ export async function fetchApi(
 export async function fetchApiGet<T = unknown>(
   url: string,
   options?: FetchOptions
-): Promise<ApiSuccessResponse<T>> {
-  const response = await fetchApi(url, { ...options, method: 'GET' });
-  return response.json();
+): Promise<T> {
+  return fetchApi(url, { ...options, method: 'GET' })
+    .then((response) => response.json())
+    .then((json) => json?.data);
 }
 
 /** Convenience wrapper for POST requests */
@@ -237,13 +238,14 @@ export async function fetchApiPost<T = unknown>(
   url: string,
   body?: unknown,
   options?: FetchOptions
-): Promise<ApiSuccessResponse<T>> {
-  const response = await fetchApi(url, {
+): Promise<T> {
+  return fetchApi(url, {
     ...options,
     method: 'POST',
     body: body ? JSON.stringify(body) : undefined,
-  });
-  return response.json();
+  })
+    .then((response) => response.json())
+    .then((json) => json?.data);
 }
 
 /** Convenience wrapper for PUT requests */
@@ -251,13 +253,14 @@ export async function fetchApiPut<T = unknown>(
   url: string,
   body?: unknown,
   options?: FetchOptions
-): Promise<ApiSuccessResponse<T>> {
-  const response = await fetchApi(url, {
+): Promise<T> {
+  return fetchApi(url, {
     ...options,
     method: 'PUT',
     body: body ? JSON.stringify(body) : undefined,
-  });
-  return response.json();
+  })
+    .then((response) => response.json())
+    .then((json) => json?.data);
 }
 
 /** Convenience wrapper for PATCH requests */
@@ -265,20 +268,25 @@ export async function fetchApiPatch<T = unknown>(
   url: string,
   body?: unknown,
   options?: FetchOptions
-): Promise<ApiSuccessResponse<T>> {
-  const response = await fetchApi(url, {
+): Promise<T> {
+  return fetchApi(url, {
     ...options,
     method: 'PATCH',
     body: body ? JSON.stringify(body) : undefined,
-  });
-  return response.json();
+  })
+    .then((response) => response.json())
+    .then((json) => json?.data);
 }
 
 /** Convenience wrapper for DELETE requests */
 export async function fetchApiDelete<T = unknown>(
   url: string,
   options?: FetchOptions
-): Promise<ApiSuccessResponse<T>> {
-  const response = await fetchApi(url, { ...options, method: 'DELETE' });
-  return response.json();
+): Promise<T> {
+  return fetchApi(url, {
+    ...options,
+    method: 'DELETE',
+  })
+    .then((response) => response.json())
+    .then((json) => json?.data);
 }

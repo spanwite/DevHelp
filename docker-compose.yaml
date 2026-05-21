@@ -1,20 +1,37 @@
 services:
-  postgres:
-    image: ghcr.io/ferretdb/postgres-documentdb:17-0.107.0-ferretdb-2.7.0
-    restart: on-failure
-    env_file:
-      - .env.local
-    volumes:
-      - ./secrets/postgresql-data:/var/lib/postgresql/data
-
-  ferretdb:
-    image: ghcr.io/ferretdb/ferretdb:2.7.0
-    restart: on-failure
+  mongo:
+    image: nesvet/mongo-rs
+    container_name: mongo
     ports:
       - 27017:27017
-    env_file:
-      - .env.local
+    environment:
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - ./secrets/mongo-data:/data/db
+    restart: unless-stopped
+    networks:
+      - mongo
+
+  mongo-express:
+    image: mongo-express
+    restart: unless-stopped
+    container_name: mongo-express
+    ports:
+      - 8081:8081
+    networks:
+      - mongo
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongo:27017/?directConnection=true
+      ME_CONFIG_BASICAUTH_ENABLED: true
+      ME_CONFIG_BASICAUTH_USERNAME: ${MONGOEXPRESS_USER}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${MONGOEXPRESS_PASSWORD}
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD}
+    depends_on:
+      mongo:
+        condition: service_healthy
 
 networks:
-  default:
-    name: ferretdb
+  mongo:
+    driver: bridge

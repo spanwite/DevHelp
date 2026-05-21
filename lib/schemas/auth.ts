@@ -15,8 +15,8 @@ export const signUpSchema = z.object({
     .min(3, 'Username must be at least 3 characters.')
     .max(20, 'Username cannot be more than 20 characters.')
     .regex(
-      /^[a-zA-Z0-9_]+$/,
-      'Username can only contain letters, numbers, and underscores.'
+      /^[a-zA-Z0-9_-]+$/,
+      'Username can only contain letters, numbers, dashes and underscores.'
     ),
 
   name: z
@@ -42,3 +42,34 @@ export const signUpSchema = z.object({
       'Password must contain at least one special character.'
     ),
 });
+
+export const signInWithOAuthSchema = z.object({
+  username: z
+    .string()
+    .min(3, 'Username must be at least 3 characters.')
+    .max(20, 'Username cannot be more than 20 characters.')
+    .regex(
+      /^[a-zA-Z0-9_-]+$/,
+      'Username can only contain letters, numbers, dashes and underscores.'
+    ),
+
+  name: z
+    .string()
+    .min(1, 'Name is required.')
+    .max(50, 'Name cannot be more than 50 characters.')
+    .regex(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces.'),
+
+  email: z
+    .string()
+    .min(1, 'Email address is required.')
+    .email('Please enter a valid email address.'),
+
+  avatar: z.string().url('Invalid avatar URL.').optional(),
+
+  provider: z.enum(['google', 'github']),
+
+  providerAccountId: z.string().min(1, 'Provider account ID is required.'),
+});
+
+export type SignInWithOAuthData = z.infer<typeof signInWithOAuthSchema>;
+export type SignInProvider = SignInWithOAuthData['provider'];

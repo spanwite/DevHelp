@@ -1,21 +1,23 @@
 // Auto-generated list of API route paths for convenient usage
 // Usage: import { API } from '@/lib/api/routes';
 
-import { Account } from '@/database/models/Account';
+import { Account, AccountDocument } from '@/database/models/Account';
 import {
   fetchApiDelete,
   fetchApiGet,
   fetchApiPost,
   fetchApiPut,
 } from './fetch';
-import { User } from '@/database/models/User';
+import { User, UserDocument } from '@/database/models/User';
 import { joinUrl } from '../utils';
+import { SignInWithOAuthData } from '../schemas/auth';
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
 
 const API_USERS_URL = joinUrl(API_BASE_URL, 'users');
 const API_ACCOUNTS_URL = joinUrl(API_BASE_URL, 'accounts');
+const API_AUTH_URL = joinUrl(API_BASE_URL, 'auth');
 
 const API_ROUTES = {
   users: {
@@ -28,55 +30,63 @@ const API_ROUTES = {
     byId: (id: string) => joinUrl(API_ACCOUNTS_URL, id),
     byProviderAccountId: joinUrl(API_ACCOUNTS_URL, 'provider'),
   },
+  auth: {
+    root: API_AUTH_URL,
+    signInWithOAuth: joinUrl(API_AUTH_URL, 'sign-in', 'oauth'),
+  },
 };
 
 export const API = {
   users: {
     create(data: User) {
-      return fetchApiPost<User>(API_ROUTES.users.root, data);
+      return fetchApiPost<UserDocument>(API_ROUTES.users.root, data);
     },
     update(id: string, data: Partial<User>) {
-      return fetchApiPut<User>(API_ROUTES.users.byId(id), data);
+      return fetchApiPut<UserDocument>(API_ROUTES.users.byId(id), data);
     },
     delete(id: string) {
-      return fetchApiDelete<User>(API_ROUTES.users.byId(id));
+      return fetchApiDelete<UserDocument>(API_ROUTES.users.byId(id));
     },
     getAll() {
-      return fetchApiGet<User[]>(API_ROUTES.users.root);
+      return fetchApiGet<UserDocument[]>(API_ROUTES.users.root);
     },
     getById(id: string) {
-      return fetchApiGet<User>(API_ROUTES.users.byId(id));
+      return fetchApiGet<UserDocument>(API_ROUTES.users.byId(id));
     },
     getByEmail(email: string) {
-      return fetchApiPost<User>(API_ROUTES.users.byEmail, { email });
+      return fetchApiPost<UserDocument>(API_ROUTES.users.byEmail, { email });
     },
   },
   accounts: {
     create(data: Account) {
-      return fetchApiPost<Account>(API_ROUTES.accounts.root, data);
+      return fetchApiPost<AccountDocument>(API_ROUTES.accounts.root, data);
     },
     update(id: string, data: Partial<Account>) {
-      return fetchApiPut<Account>(API_ROUTES.accounts.byId(id), data);
+      return fetchApiPut<AccountDocument>(API_ROUTES.accounts.byId(id), data);
     },
     delete(id: string) {
-      return fetchApiDelete<Account>(API_ROUTES.accounts.byId(id));
+      return fetchApiDelete<AccountDocument>(API_ROUTES.accounts.byId(id));
     },
     getAll() {
-      return fetchApiGet<Account[]>(API_ROUTES.accounts.root);
+      return fetchApiGet<AccountDocument[]>(API_ROUTES.accounts.root);
     },
     getById(id: string) {
-      return fetchApiGet<Account>(API_ROUTES.accounts.byId(id));
+      return fetchApiGet<AccountDocument>(API_ROUTES.accounts.byId(id));
     },
     getByProviderAccountId(providerAccountId: string) {
-      return fetchApiPost<Account>(API_ROUTES.accounts.byProviderAccountId, {
-        providerAccountId,
-      });
+      return fetchApiPost<AccountDocument>(
+        API_ROUTES.accounts.byProviderAccountId,
+        { providerAccountId }
+      );
     },
   },
   auth: {
-    // next-auth catch-all route, append rest as needed
-    root: '/api/auth',
-    nextAuth: (path = '') => `/api/auth/${path}`.replace(/\/+$/, ''),
+    signInWithOAuth(data: SignInWithOAuthData) {
+      return fetchApiPost<AccountDocument>(
+        API_ROUTES.auth.signInWithOAuth,
+        data
+      );
+    },
   },
 };
 

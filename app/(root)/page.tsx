@@ -5,6 +5,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { data } from './data';
 import { QuestionCard } from '@/components/question';
+import { auth } from '@/auth';
 
 export const metadata: Metadata = {
   title: 'DevExchange',
@@ -22,9 +23,14 @@ export default async function Home({
 
   return (
     <section className='space-y-6'>
-      <div className='flex items-center justify-between flex-wrap gap-4'>
+      <div className='flex flex-wrap items-center justify-between gap-4'>
         <h1 className='text-3xl font-bold'>All Questions</h1>
-        <Button variant='gradient-accent' size='lg' className='max-xs:flex-1' asChild>
+        <Button
+          variant='gradient-accent'
+          size='lg'
+          className='max-xs:flex-1'
+          asChild
+        >
           <Link href={ROUTES.askQuestion}>Ask a Question</Link>
         </Button>
       </div>

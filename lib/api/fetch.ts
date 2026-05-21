@@ -123,6 +123,10 @@ export async function fetchApi(
         errorData = { message: 'Failed to parse error response' };
       }
 
+      if (errorData?.error) {
+        errorData = errorData.error;
+      }
+
       const errorMessage = errorData?.message || `HTTP ${response.status}`;
       const errorCode = errorData?.code || ERROR_CODES.API_ERROR;
 

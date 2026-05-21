@@ -73,7 +73,6 @@ export function formErrorResponse(
     ...defaultErrorResponseParams,
     ...params,
   };
-  console.log(params);
   return NextResponse.json<ApiErrorResponse>(
     {
       success: false,

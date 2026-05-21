@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from 'clsx';
+import { nanoid } from 'nanoid';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]): string {
@@ -44,4 +45,35 @@ export async function resourceExists(url: string): Promise<boolean> {
   } catch {
     return false;
   }
+}
+
+type OmitUndefined<T extends Record<string, unknown>> = {
+  [K in keyof T as T[K] extends undefined ? never : K]: Exclude<
+    T[K],
+    undefined
+  >;
+};
+
+export function omitUndefined<T extends Record<string, unknown>>(
+  obj: T
+): OmitUndefined<T> {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([, value]) => value !== undefined)
+  ) as OmitUndefined<T>;
+}
+
+export function retrieveUsernameFromEmail(email: string): string {
+  const localPart = email.split('@')[0];
+  if (!localPart) {
+    return '';
+  }
+  return localPart.toLowerCase().replace(/[.]/g, '');
+}
+
+export function unifyUsername(username: string, unifiedPartLength = 5): string {
+  return `${username}-${nanoid(unifiedPartLength)}`;
+}
+
+export function formatUsername(username: string): string {
+  
 }

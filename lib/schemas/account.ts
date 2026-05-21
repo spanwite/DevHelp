@@ -19,8 +19,8 @@ export const AccountSchema = z.object({
       'Password must contain at least one special character.'
     )
     .optional(),
-  provider: z.string().min(1),
-  providerAccountId: z.string().min(1),
+  provider: z.enum(['google', 'github']),
+  providerAccountId: z.string().min(1, 'Provider account ID is required.'),
 });
 
 export type Account = z.infer<typeof AccountSchema>;

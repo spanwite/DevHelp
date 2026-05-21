@@ -1,4 +1,11 @@
-import { Model, model, models, Schema, Types } from 'mongoose';
+import {
+  InferHydratedDocTypeFromSchema,
+  Model,
+  model,
+  models,
+  Schema,
+  Types,
+} from 'mongoose';
 
 export interface Account {
   userId: Types.ObjectId;
@@ -21,6 +28,10 @@ const AccountSchema = new Schema<Account>(
   },
   { timestamps: true }
 );
+
+export type AccountDocument = InferHydratedDocTypeFromSchema<
+  typeof AccountSchema
+>;
 
 const Account: Model<Account> =
   models.Account || model('Account', AccountSchema);

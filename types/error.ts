@@ -7,6 +7,7 @@ export const ERROR_TYPES = {
   DATABASE: 'DATABASE',
   EXTERNAL_SERVICE: 'EXTERNAL_SERVICE',
   INTERNAL_SERVER: 'INTERNAL_SERVER',
+  FORBIDDEN: 'FORBIDDEN',
 } as const;
 export type ErrorType = (typeof ERROR_TYPES)[keyof typeof ERROR_TYPES];
 
@@ -22,6 +23,7 @@ export const ERROR_CODES = {
   TIMEOUT_ERROR: 'TIMEOUT_ERROR',
   NETWORK_ERROR: 'NETWORK_ERROR',
   API_ERROR: 'API_ERROR',
+  FORBIDDEN_ERROR: 'FORBIDDEN_ERROR',
 } as const;
 export type ErrorCode = (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
 

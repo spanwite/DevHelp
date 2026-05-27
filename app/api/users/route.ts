@@ -11,7 +11,7 @@ import { formSuccessResponse } from '@/lib/api/response';
 async function handleGET(request: NextRequest) {
   await dbConnect();
 
-  const users = await User.find().select('-password -email').lean();
+  const users = await User.find();
 
   logger.info('Users fetched successfully', {
     method: 'GET',

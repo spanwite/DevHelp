@@ -12,6 +12,7 @@ import { useId } from 'react';
 export function MainNav({
   items,
   shouldCloseSheet = false,
+  userId,
 }: {
   items: {
     title: string;
@@ -19,8 +20,8 @@ export function MainNav({
     icon: LucideIcon;
   }[];
   shouldCloseSheet?: boolean;
+  userId?: string;
 }) {
-  const userId = 1; // TODO: Replace with actual user ID from auth context
   const pathname = usePathname();
   const titleId = useId();
 
@@ -32,6 +33,9 @@ export function MainNav({
           const isActive =
             pathname === url || (url !== '/' && pathname.startsWith(url));
           if (url === ROUTES.profile) {
+            if (!userId) {
+              return null;
+            }
             url = `${ROUTES.profile}/${userId}`;
           }
           const LinkComponent = (

@@ -38,7 +38,7 @@ export const signUpSchema = z.object({
     .regex(/[A-Z]/, 'Password must contain at least one uppercase letter.')
     .regex(/[0-9]/, 'Password must contain at least one number.')
     .regex(
-      /[!@#$%^&*(),.?":{}|<>_]/,
+      /[!@#$%^&*(),.?":{}|<>_=]/,
       'Password must contain at least one special character.'
     ),
 });
@@ -73,3 +73,6 @@ export const signInWithOAuthSchema = z.object({
 
 export type SignInWithOAuthData = z.infer<typeof signInWithOAuthSchema>;
 export type SignInProvider = SignInWithOAuthData['provider'];
+
+export type SignUpData = z.infer<typeof signUpSchema>;
+export type SignInData = z.infer<typeof signInSchema>;

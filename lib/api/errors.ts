@@ -71,15 +71,28 @@ export class AuthorizationError extends AppError {
 }
 
 export class NotFoundError extends AppError {
-  constructor(resource: string = 'Resource', details?: ErrorDetails) {
+  constructor(message: string = 'Resource not found', details?: ErrorDetails) {
     super(
-      `${resource} not found`,
+      message,
       ERROR_TYPES.NOT_FOUND,
       404,
       ERROR_CODES.NOT_FOUND_ERROR,
       details
     );
     this.name = 'NotFoundError';
+  }
+}
+
+export class ForbiddenError extends AppError {
+  constructor(message: string = 'Forbidden', details?: ErrorDetails) {
+    super(
+      message,
+      ERROR_TYPES.FORBIDDEN,
+      403,
+      ERROR_CODES.FORBIDDEN_ERROR,
+      details
+    );
+    this.name = 'ForbiddenError';
   }
 }
 

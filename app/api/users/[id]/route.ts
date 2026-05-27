@@ -19,7 +19,7 @@ async function handleGET(
 
   await dbConnect();
 
-  const user = await User.findById(id).select('-password').lean();
+  const user = await User.findById(id);
   if (!user) {
     throw new NotFoundError('User', {
       userId: id,

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { ROUTES } from '@/lib/constants';
 import { cn } from '@/lib/utils';
@@ -21,18 +21,17 @@ export function Auth<FormFields extends FieldValues>({
   className,
   schema,
   defaultValues,
+  onAuth,
   ...props
 }: React.ComponentProps<typeof Card> & {
   schema: ZodType<FormFields, any>;
   defaultValues: FormFields;
+  onAuth: (data: FormFields) => unknown;
 }) {
   const isSignUp = 'username' in defaultValues;
 
   return (
-    <Card
-      className={cn('w-full sm:max-w-md', className)}
-      {...props}
-    >
+    <Card className={cn('w-full sm:max-w-md', className)} {...props}>
       <CardHeader
         className={cn('flex items-center justify-between gap-2', className)}
       >
@@ -48,7 +47,11 @@ export function Auth<FormFields extends FieldValues>({
         />
       </CardHeader>
       <CardContent>
-        <BasicAuthForm schema={schema} defaultValues={defaultValues} />
+        <BasicAuthForm
+          schema={schema}
+          defaultValues={defaultValues}
+          onSubmit={onAuth}
+        />
       </CardContent>
       <CardFooter className='flex-col gap-4'>
         <div className='flex flex-wrap items-center justify-center'>

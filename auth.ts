@@ -2,14 +2,58 @@ import NextAuth from 'next-auth';
 import GitHub from 'next-auth/providers/github';
 import Google from 'next-auth/providers/google';
 import API from './lib/api/routes';
-import { SignInProvider, SignInWithOAuthData } from './lib/schemas/auth';
+import {
+  SignInProvider,
+  signInSchema,
+  SignInWithOAuthData,
+} from './lib/schemas/auth';
 import { logger } from './lib/logger';
 import { retrieveUsernameFromEmail } from './lib/utils';
 import slugify from 'slugify';
 import { nanoid } from 'nanoid';
+import Credentials from 'next-auth/providers/credentials';
+import argon2 from 'argon2';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [GitHub, Google],
+  providers: [
+    GitHub,
+    Google,
+    Credentials({
+      async authorize(credentials) {
+        const { success, data } =
+          await signInSchema.safeParseAsync(credentials);
+        if (!success) {
+          return null;
+        }
+
+        const account = await API.accounts.getByProviderAccountId(data.email);
+        if (!account) {
+          return null;
+        }
+
+        const user = await API.users.getById(account.userId.toString());
+        if (!user) {
+          return null;
+        }
+
+        const isPasswordValid = await argon2.verify(
+          user.password!,
+          data.password
+        );
+        console.log('Password verification result:', isPasswordValid);
+        if (!isPasswordValid) {
+          return null;
+        }
+
+        return {
+          id: user._id.toString(),
+          email: user.email,
+          name: user.name,
+          image: user.avatar,
+        };
+      },
+    }),
+  ],
   callbacks: {
     signIn: async ({ user, account, profile }) => {
       logger.info('Sign-in callback called', { user, account, profile });

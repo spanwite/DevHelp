@@ -10,13 +10,17 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { Menu } from 'lucide-react';
+import { LogOut, Menu } from 'lucide-react';
 import Link from 'next/link';
 import { Logo } from '../ui/Logo';
 import { MainNav } from '../navigation';
 import { NAVIGATION_LINKS } from '@/lib/constants';
+import { signOut, useSession } from 'next-auth/react';
 
 export function NavSheet() {
+  const session = useSession();
+  const isAuthenticated = session.status === 'authenticated';
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -38,16 +42,30 @@ export function NavSheet() {
           <MainNav items={NAVIGATION_LINKS} shouldCloseSheet />
         </nav>
         <SheetFooter>
-          <SheetClose asChild>
-            <Button variant='outline' asChild>
-              <Link href='/sign-in'>Log in</Link>
-            </Button>
-          </SheetClose>
-          <SheetClose asChild>
-            <Button asChild>
-              <Link href='/sign-up'>Sign Up</Link>
-            </Button>
-          </SheetClose>
+          {isAuthenticated ? (
+            <SheetClose asChild>
+              <Button
+                variant='ghost'
+                className='justify-start'
+                onClick={() => signOut()}
+              >
+                <LogOut /> Log Out
+              </Button>
+            </SheetClose>
+          ) : (
+            <>
+              <SheetClose asChild>
+                <Button variant='outline' asChild>
+                  <Link href='/sign-in'>Log in</Link>
+                </Button>
+              </SheetClose>
+              <SheetClose asChild>
+                <Button asChild>
+                  <Link href='/sign-up'>Sign Up</Link>
+                </Button>
+              </SheetClose>
+            </>
+          )}
         </SheetFooter>
       </SheetContent>
     </Sheet>

@@ -1,10 +1,5 @@
 import { Button } from '@/components/ui/button';
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from '../ui/field';
+import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/field';
 import { Input } from '../ui/input';
 import { capitalizeFirstLetter } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -14,17 +9,22 @@ import {
   DefaultValues,
   FieldValues,
   Path,
+  SubmitHandler,
   useForm,
 } from 'react-hook-form';
 import { toast } from 'sonner';
 import { type ZodType } from 'zod/v3';
+import { useRouter } from 'next/navigation';
+import { ROUTES } from '@/lib/constants';
 
 export function BasicAuthForm<FormFields extends FieldValues>({
   schema,
   defaultValues,
+  onSubmit,
 }: {
   schema: ZodType<FormFields, any>;
   defaultValues: FormFields;
+  onSubmit: (data: FormFields) => unknown;
 }) {
   const isSignUp = 'username' in defaultValues;
   const form = useForm<FormFields>({
@@ -32,24 +32,29 @@ export function BasicAuthForm<FormFields extends FieldValues>({
     defaultValues: defaultValues as DefaultValues<FormFields>,
   });
   const formId = useId();
+  const router = useRouter();
+  const messages = {
+    label: isSignUp ? 'Sign Up' : 'Sign In',
+    wip: isSignUp ? 'Signing up...' : 'Signing in...',
+    done: isSignUp ? 'Signed up' : 'Signed in',
+  };
 
-  function handleSubmit(data: FormFields) {
-    // TODO: Implement actual authentication logic here
-    toast('You submitted the following values:', {
-      description: (
-        <pre className='bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4'>
-          <code>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-      position: 'bottom-right',
-      classNames: {
-        content: 'flex flex-col gap-2',
-      },
-      style: {
-        '--border-radius': 'calc(var(--radius)  + 4px)',
-      } as React.CSSProperties,
-    });
-  }
+  const handleSubmit = async (data: FormFields) => {
+    try {
+      await onSubmit(data);
+
+      toast.success(`${messages.label} successful`, {
+        description: `${messages.done} successfully. Redirecting to home page...`,
+      });
+
+      router.push(ROUTES.home);
+    } catch (error) {
+      toast.error(`${messages.label} failed`, {
+        description:
+          error instanceof Error ? error.message : 'Unknown error occured.',
+      });
+    }
+  };
 
   const renderField = (fieldName: string) => {
     const controlId = `${formId}-${fieldName}`;
@@ -71,6 +76,7 @@ export function BasicAuthForm<FormFields extends FieldValues>({
       fieldName === 'email'
         ? 'Email address'
         : capitalizeFirstLetter(fieldName);
+
     return (
       <Controller
         key={fieldName}
@@ -102,13 +108,7 @@ export function BasicAuthForm<FormFields extends FieldValues>({
           form={formId}
           disabled={form.formState.isSubmitting}
         >
-          {form.formState.isSubmitting
-            ? isSignUp
-              ? 'Signing up...'
-              : 'Signing in...'
-            : isSignUp
-              ? 'Sign Up'
-              : 'Sign In'}
+          {form.formState.isSubmitting ? messages.wip : messages.label}
         </Button>
       </FieldGroup>
     </form>

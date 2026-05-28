@@ -45,7 +45,7 @@ export function QuestionCard({ data }: { data: Question }) {
             <Button variant='ghost' asChild>
               <Link
                 className='flex items-center gap-1 py-1'
-                href={joinUrl(ROUTES.profile, data.creator.id.toString())}
+                href={joinUrl(ROUTES.profiles, data.creator.id.toString())}
               >
                 <Avatar size='sm'>
                   <AvatarImage src={data.creator.image} />

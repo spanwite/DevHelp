@@ -19,9 +19,12 @@ export const ROUTES = {
   communities: '/communities',
   tags: '/tags',
   askQuestion: '/ask-question',
-  profile: '/profile',
+  profiles: '/profiles',
   questions: '/questions',
 
+  profile(id: string) {
+    return joinUrl(this.profiles, id);
+  },
   tag(id: string | number) {
     return joinUrl(this.tags, id.toString());
   },
@@ -59,7 +62,7 @@ export const NAVIGATION_LINKS: {
   },
   {
     title: 'Profile',
-    url: ROUTES.profile,
+    url: ROUTES.profiles,
     icon: UserIcon,
   },
   {

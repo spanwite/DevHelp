@@ -32,11 +32,11 @@ export function MainNav({
         {items.map(({ title, url, icon: Icon }) => {
           const isActive =
             pathname === url || (url !== '/' && pathname.startsWith(url));
-          if (url === ROUTES.profile) {
+          if (url === ROUTES.profiles) {
             if (!userId) {
               return null;
             }
-            url = `${ROUTES.profile}/${userId}`;
+            url = `${ROUTES.profiles}/${userId}`;
           }
           const LinkComponent = (
             <Button

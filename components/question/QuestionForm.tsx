@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { QuestionFormData, questionSchema } from '@/lib/schemas/question';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useId, useRef } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, DefaultValues, useForm } from 'react-hook-form';
 import {
   Field,
   FieldDescription,
@@ -17,20 +17,25 @@ import { Editor } from '../editor';
 import { MDXEditorMethods } from '@mdxeditor/editor';
 import { tagAliases } from './constants';
 import MaybeImage from '../utils/MaybeImage.client';
-import { getDeviconUrl, joinUrl } from '@/lib/utils';
+import { getDeviconUrl } from '@/lib/utils';
 import { X } from 'lucide-react';
-import { createQuestion } from '@/lib/actions/question';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
-import { ROUTES } from '@/lib/constants';
 
-export function QuestionForm() {
+export function QuestionForm({
+  defaultValues,
+  onSubmit,
+  intent = 'create',
+}: {
+  defaultValues?: DefaultValues<QuestionFormData>;
+  onSubmit: (data: QuestionFormData) => any;
+  intent?: 'create' | 'update';
+}) {
   const form = useForm<QuestionFormData>({
     resolver: zodResolver(questionSchema),
     defaultValues: {
       title: '',
       description: '',
       tags: [],
+      ...defaultValues,
     },
   });
   const formId = useId();
@@ -40,24 +45,6 @@ export function QuestionForm() {
     tags: `${formId}-tags`,
   };
   const editorRef = useRef<MDXEditorMethods>(null);
-  const router = useRouter();
-
-  const onSubmit = async (data: QuestionFormData) => {
-    try {
-      const question = await createQuestion(data);
-
-      toast.success('Question created successfully', {
-        description: 'Your question has been created successfully.',
-      });
-
-      router.push(ROUTES.question(question._id.toString()));
-    } catch (error) {
-      const isError = error instanceof Error;
-      toast.error(isError ? error.name : 'Question creation failed', {
-        description: isError ? error.message : 'Unknown error occured.',
-      });
-    }
-  };
 
   const onTagKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
@@ -211,8 +198,10 @@ export function QuestionForm() {
         className='ml-auto w-fit'
       >
         {form.formState.isSubmitting
-          ? 'Asking a Question...'
-          : 'Ask a Question'}
+          ? 'Submitting...'
+          : intent === 'create'
+            ? 'Ask Question'
+            : 'Update Question'}
       </Button>
     </form>
   );

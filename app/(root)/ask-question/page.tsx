@@ -1,19 +1,22 @@
-import { auth } from '@/auth';
-import { QuestionForm } from '@/components/question';
-import { ROUTES } from '@/lib/constants';
-import { redirect } from 'next/navigation';
+'use client';
 
-export default async function AskQuestion() {
-  const session = await auth();
+import { CreateQuestionForm } from '@/components/question/CreateQuestionForm';
+import { ROUTES } from '@/lib/constants';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+
+export default function AskQuestion() {
+  const router = useRouter();
+  const session = useSession();
 
   if (!session) {
-    redirect(ROUTES.signIn);
+    router.push(ROUTES.signIn);
   }
 
   return (
     <>
       <h1 className='mb-4 text-3xl font-bold'>Ask a Question</h1>
-      <QuestionForm />
+      <CreateQuestionForm />
     </>
   );
 }

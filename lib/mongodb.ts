@@ -1,4 +1,4 @@
-import mongoose, { Default__v, Require_id } from 'mongoose';
+import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -10,4 +10,12 @@ export async function dbConnect() {
   return mongoose;
 }
 
-export type MongooseObject<T> = Default__v<Require_id<T>>;
+export type FlattenObjectIds<T> = T extends object
+  ? {
+      [K in keyof T]: T[K] extends mongoose.Types.ObjectId
+        ? string
+        : FlattenObjectIds<T[K]>;
+    }
+  : T;
+
+export type DocJSON<T> = FlattenObjectIds<T> & { _id: string; __v: number };

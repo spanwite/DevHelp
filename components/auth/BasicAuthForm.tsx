@@ -32,7 +32,6 @@ export function BasicAuthForm<FormFields extends FieldValues>({
     defaultValues: defaultValues as DefaultValues<FormFields>,
   });
   const formId = useId();
-  const router = useRouter();
   const messages = {
     label: isSignUp ? 'Sign Up' : 'Sign In',
     wip: isSignUp ? 'Signing up...' : 'Signing in...',

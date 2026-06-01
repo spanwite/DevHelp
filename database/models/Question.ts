@@ -1,4 +1,4 @@
-import { MongooseObject } from '@/lib/mongodb';
+import { DocJSON } from '@/lib/mongodb';
 import {
   InferHydratedDocTypeFromSchema,
   Model,
@@ -35,6 +35,6 @@ const QuestionSchema = new Schema<Question>(
 const Question: Model<Question> =
   models.Question || model('Question', QuestionSchema);
 
-export type QuestionObject = MongooseObject<Question>;
+export type QuestionObject = DocJSON<Question>;
 
 export default Question;

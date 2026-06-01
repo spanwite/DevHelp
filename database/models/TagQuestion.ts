@@ -1,17 +1,17 @@
 import mongoose from 'mongoose';
 
 export interface TagQuestion {
-  tag: mongoose.Types.ObjectId;
-  question: mongoose.Types.ObjectId;
+  tagId: mongoose.Types.ObjectId;
+  questionId: mongoose.Types.ObjectId;
 }
 
 const TagQuestionSchema = new mongoose.Schema<TagQuestion>({
-  tag: {
+  tagId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Tag',
     required: true,
   },
-  question: {
+  questionId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Question',
     required: true,

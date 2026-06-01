@@ -1,7 +1,7 @@
 import { ValidationError, NotFoundError } from '@/lib/api/errors';
 import { logger } from '@/lib/logger';
 import User from '@/database/models/User';
-import dbConnect from '@/lib/mongodb';
+import { dbConnect } from '@/lib/mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 import { withErrorHandler } from '@/lib/api/error-handler';
 import { formSuccessResponse } from '@/lib/api/response';

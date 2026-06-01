@@ -17,8 +17,12 @@ import { Editor } from '../editor';
 import { MDXEditorMethods } from '@mdxeditor/editor';
 import { tagAliases } from './constants';
 import MaybeImage from '../utils/MaybeImage.client';
-import { getDeviconUrl } from '@/lib/utils';
+import { getDeviconUrl, joinUrl } from '@/lib/utils';
 import { X } from 'lucide-react';
+import { createQuestion } from '@/lib/actions/question';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { ROUTES } from '@/lib/constants';
 
 export function QuestionForm() {
   const form = useForm<QuestionFormData>({
@@ -36,10 +40,23 @@ export function QuestionForm() {
     tags: `${formId}-tags`,
   };
   const editorRef = useRef<MDXEditorMethods>(null);
+  const router = useRouter();
 
-  const onSubmit = (data: QuestionFormData) => {
-    console.log('Form submitted with data:', data);
-    // TODO: Implement form submission logic
+  const onSubmit = async (data: QuestionFormData) => {
+    try {
+      const question = await createQuestion(data);
+
+      toast.success('Question created successfully', {
+        description: 'Your question has been created successfully.',
+      });
+
+      router.push(ROUTES.question(question._id.toString()));
+    } catch (error) {
+      const isError = error instanceof Error;
+      toast.error(isError ? error.name : 'Question creation failed', {
+        description: isError ? error.message : 'Unknown error occured.',
+      });
+    }
   };
 
   const onTagKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -149,9 +166,7 @@ export function QuestionForm() {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={controlIds.tags}>
-                Tags
-              </FieldLabel>
+              <FieldLabel htmlFor={controlIds.tags}>Tags</FieldLabel>
               <Input
                 onKeyDown={onTagKeyDown}
                 id={controlIds.tags}

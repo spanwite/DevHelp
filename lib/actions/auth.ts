@@ -1,7 +1,7 @@
 'use server';
 
 import { SignInData, SignUpData } from '../schemas/auth';
-import dbConnect from '../mongodb';
+import { dbConnect } from '../mongodb';
 import mongoose from 'mongoose';
 import User from '@/database/models/User';
 import { ConflictError, ForbiddenError, NotFoundError } from '../api/errors';

@@ -3,7 +3,7 @@ import User from '@/database/models/User';
 import { withErrorHandler } from '@/lib/api/error-handler';
 import { formSuccessResponse } from '@/lib/api/response';
 import { parseJson, parseSchema } from '@/lib/api/validation';
-import dbConnect from '@/lib/mongodb';
+import { dbConnect } from '@/lib/mongodb';
 import { signInWithOAuthSchema } from '@/lib/schemas/auth';
 import mongoose from 'mongoose';
 import { NextRequest } from 'next/server';

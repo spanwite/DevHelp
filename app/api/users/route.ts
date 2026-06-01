@@ -1,5 +1,5 @@
 import User from '@/database/models/User';
-import dbConnect from '@/lib/mongodb';
+import { dbConnect } from '@/lib/mongodb';
 import { type NextRequest } from 'next/server';
 import { withErrorHandler } from '@/lib/api/error-handler';
 import { logger } from '@/lib/logger';

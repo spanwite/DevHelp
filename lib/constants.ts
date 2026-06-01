@@ -28,6 +28,9 @@ export const ROUTES = {
   tag(id: string | number) {
     return joinUrl(this.tags, id.toString());
   },
+  question(id: string) {
+    return joinUrl(this.questions, id);
+  },
 } as const;
 
 export const NAVIGATION_LINKS: {

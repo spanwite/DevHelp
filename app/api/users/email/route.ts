@@ -4,7 +4,7 @@ import { ValidationError, NotFoundError } from '@/lib/api/errors';
 import { formSuccessResponse } from '@/lib/api/response';
 import { parseJson, parseSchema } from '@/lib/api/validation';
 import { logger } from '@/lib/logger';
-import dbConnect from '@/lib/mongodb';
+import { dbConnect } from '@/lib/mongodb';
 import { UserSchema } from '@/lib/schemas/user';
 import { NextRequest } from 'next/server';
 

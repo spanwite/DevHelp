@@ -1,24 +1,6 @@
-import { DocJSON } from '@/lib/mongodb';
-import {
-  InferHydratedDocTypeFromSchema,
-  Model,
-  model,
-  models,
-  Schema,
-  Types,
-} from 'mongoose';
+import mongoose from 'mongoose';
 
-export interface Question {
-  title: string;
-  description: string;
-  creator: Types.ObjectId;
-  views: number;
-  upvotes: number;
-  downvotes: number;
-  answers: number;
-}
-
-const QuestionSchema = new Schema<Question>(
+const QuestionSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     description: { type: String, required: true },
@@ -27,14 +9,20 @@ const QuestionSchema = new Schema<Question>(
     downvotes: { type: Number, default: 0 },
     answers: { type: Number, default: 0 },
 
-    creator: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    creator: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-const Question: Model<Question> =
-  models.Question || model('Question', QuestionSchema);
+export type QuestionDocument = mongoose.InferSchemaType<typeof QuestionSchema>;
 
-export type QuestionObject = DocJSON<Question>;
+const Question: mongoose.Model<QuestionDocument> =
+  mongoose.models.Question || mongoose.model('Question', QuestionSchema);
 
 export default Question;

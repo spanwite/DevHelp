@@ -3,9 +3,9 @@ import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/lib/constants';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { data } from './data';
 import { QuestionCard } from '@/components/question';
-import { auth } from '@/auth';
+import { findQuestions } from '@/lib/actions/question';
+import { SearchAlert } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'DevExchange',
@@ -13,13 +13,26 @@ export const metadata: Metadata = {
     'Платформа движемая сообществом для обмена знаниями и опытом в сфере разработки программного обеспечения. Задавайте вопросы, делитесь решениями и учитесь у других разработчиков. Независимо от вашего уровня опыта, DevExchange поможет вам найти ответы на ваши вопросы по различным темам: веб-разработка, мобильная разработка, базы данных, DevOps и многое другое. Присоединяйтесь к нашему сообществу и начните обмениваться знаниями уже сегодня!',
 };
 
+const filters = [
+  { name: 'Newest', value: 'newest' },
+  { name: 'Recommended', value: 'recommended' },
+  { name: 'Most Answered', value: 'most-answered' },
+  { name: 'Unanswered', value: 'unanswered' },
+];
+
 export default async function Home({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string }>;
 }) {
-  // TODO: Implement search functionality using searchParams
-  const { query, filter } = await searchParams;
+  const { query, filter, page = 1, limit = 10 } = await searchParams;
+
+  const data = await findQuestions({
+    page: Number(page),
+    limit: Number(limit),
+    query,
+    filter,
+  });
 
   return (
     <section className='space-y-6'>
@@ -35,13 +48,20 @@ export default async function Home({
         </Button>
       </div>
       <UrlSearch placeholder='Search for questions...' />
-      <UrlFilter items={data.filters} />
+      <UrlFilter items={filters} />
       <ul className='grid gap-6'>
-        {data.questions.map((question) => (
-          <li key={question.id}>
-            <QuestionCard data={question} />
-          </li>
-        ))}
+        {data.questions.length > 0 ? (
+          data.questions.map((question) => (
+            <li key={question._id}>
+              <QuestionCard data={question} />
+            </li>
+          ))
+        ) : (
+          <p className='text-muted-foreground mt-4 flex items-center justify-center gap-1.5'>
+            <SearchAlert className='size-5' />
+            No questions found...
+          </p>
+        )}
       </ul>
     </section>
   );

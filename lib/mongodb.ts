@@ -10,11 +10,21 @@ export async function dbConnect() {
   return mongoose;
 }
 
+export function handleTransform(doc: any, ret: any) {
+  ret.id = ret._id.toString();
+  delete ret._id;
+  delete ret.__v;
+  delete ret.password;
+  return ret;
+}
+
 export type FlattenObjectIds<T> = T extends object
   ? {
       [K in keyof T]: T[K] extends mongoose.Types.ObjectId
         ? string
-        : FlattenObjectIds<T[K]>;
+        : T extends NativeDate
+          ? string
+          : FlattenObjectIds<T[K]>;
     }
   : T;
 

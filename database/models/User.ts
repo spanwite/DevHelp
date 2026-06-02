@@ -1,10 +1,4 @@
-import {
-  Schema,
-  models,
-  model,
-  Model,
-  InferHydratedDocTypeFromSchema,
-} from 'mongoose';
+import mongoose from 'mongoose';
 
 export interface User {
   name: string;
@@ -18,7 +12,7 @@ export interface User {
   reputation?: number;
 }
 
-const UserSchema = new Schema<User>(
+const UserSchema = new mongoose.Schema<User>(
   {
     name: { type: String, required: true },
     username: { type: String, required: true, unique: true },
@@ -33,8 +27,11 @@ const UserSchema = new Schema<User>(
   { timestamps: true }
 );
 
-export type UserDocument = InferHydratedDocTypeFromSchema<typeof UserSchema>;
+export type UserDocument = mongoose.InferHydratedDocTypeFromSchema<
+  typeof UserSchema
+>;
 
-const User: Model<User> = models.User || model<User>('User', UserSchema);
+const User: mongoose.Model<User> =
+  mongoose.models.User || mongoose.model<User>('User', UserSchema);
 
 export default User;

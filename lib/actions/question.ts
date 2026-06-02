@@ -3,15 +3,14 @@
 import mongoose from 'mongoose';
 import { dbConnect } from '../mongodb';
 import { QuestionFormData } from '../schemas/question';
-import Question, { QuestionObject } from '@/database/models/Question';
+import Question from '@/database/models/Question';
 import { AuthenticationError, NotFoundError } from '../api/errors';
 import Tag, { TagDocument } from '@/database/models/Tag';
 import TagQuestion from '@/database/models/TagQuestion';
 import { auth } from '@/auth';
+import '@/database/models/User';
 
-export async function createQuestion(
-  data: QuestionFormData
-): Promise<QuestionObject> {
+export async function createQuestion(data: QuestionFormData) {
   const authSession = await auth();
   const userId = authSession?.user?.id;
   if (!userId) {
@@ -67,7 +66,7 @@ export async function createQuestion(
 export async function updateQuestionById(
   questionId: string,
   updatedData: QuestionFormData
-): Promise<QuestionObject> {
+) {
   const authSession = await auth();
   const userId = authSession?.user?.id;
   if (!userId) {
@@ -141,9 +140,7 @@ export async function updateQuestionById(
   }
 }
 
-export async function findQuestionById(
-  questionId: string
-): Promise<(QuestionObject & { tags: string[] }) | null> {
+export async function findQuestionById(questionId: string) {
   await dbConnect();
 
   const question = await Question.findById(questionId);
@@ -158,5 +155,73 @@ export async function findQuestionById(
   return {
     ...question.toObject({ flattenObjectIds: true }),
     tags: questionTags.map((tag) => tag.tagId.name),
+  };
+}
+
+export async function findQuestions({
+  page = 1,
+  limit = 10,
+  query,
+  sort,
+  filter,
+}: {
+  page?: number;
+  limit?: number;
+  query?: string;
+  sort?: string;
+  filter?: string;
+}) {
+  const skip = (page - 1) * limit;
+
+  const filterQuery: mongoose.QueryFilter<typeof Question> = {};
+  const sortOrder: Record<string, mongoose.SortOrder> = {};
+
+  if (query) {
+    filterQuery.$or = [
+      { title: { $regex: new RegExp(query, 'i') } },
+      { description: { $regex: new RegExp(query, 'i') } },
+    ];
+  }
+
+  switch (filter) {
+    case 'popular':
+      sortOrder.upvotes = -1;
+      break;
+    case 'unanswered':
+      filterQuery.$and = [{ answers: 0 }];
+    case 'newest':
+    default:
+      sortOrder.createdAt = -1;
+  }
+
+  await dbConnect();
+
+  const questions = await Question.find(filterQuery)
+    .populate<{
+      creator: { _id: string; name: string; avatar: string };
+    }>('creator', 'name avatar')
+    .sort(sortOrder)
+    .skip(skip)
+    .limit(limit);
+
+  const questionsWithTags = await Promise.all(
+    questions.map(async (question) => {
+      const questionTags = await TagQuestion.find({
+        questionId: question._id,
+      }).populate<{ tagId: TagDocument }>('tagId');
+      return {
+        ...question.toObject({ flattenObjectIds: true }),
+        tags: questionTags.map((tag) =>
+          tag.tagId.toObject({ flattenObjectIds: true })
+        ),
+      };
+    })
+  );
+
+  const totalQuestions = await Question.countDocuments(filterQuery);
+
+  return {
+    questions: questionsWithTags,
+    hasNextPage: skip + questions.length < totalQuestions,
   };
 }

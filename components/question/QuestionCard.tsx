@@ -1,6 +1,5 @@
 import { ROUTES } from '@/lib/constants';
 import { getDeviconUrl, joinUrl } from '@/lib/utils';
-import { Question } from '@/types';
 import { Dot, Eye, MessageCircle, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
 import { format } from 'timeago.js';
@@ -11,23 +10,40 @@ import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import MaybeImage from '../utils/MaybeImage.server';
 
-export function QuestionCard({ data }: { data: Question }) {
+interface Props {
+  data: {
+    _id: string;
+    title: string;
+    tags: {
+      _id: string;
+      name: string;
+    }[];
+    creator: {
+      _id: string;
+      name: string;
+      avatar: string;
+    };
+    createdAt: Date;
+    upvotes: number;
+    answers: number;
+    views: number;
+  };
+}
+
+export function QuestionCard({ data }: Props) {
   return (
     <Card className='gap-2' size='lg'>
       <CardHeader className='text-xl font-bold'>
-        <Link
-          className='py-2'
-          href={joinUrl(ROUTES.questions, data.id.toString())}
-        >
+        <Link className='py-2' href={joinUrl(ROUTES.questions, data._id)}>
           {data.title}
         </Link>
       </CardHeader>
       <CardContent className='space-y-6'>
         <ul className='flex flex-wrap gap-2'>
           {data.tags.map((tag) => (
-            <li key={tag.id}>
+            <li key={tag._id}>
               <Badge variant='secondary' asChild>
-                <Link href={ROUTES.tag(tag.id)}>
+                <Link href={ROUTES.tag(tag._id)}>
                   <MaybeImage
                     src={getDeviconUrl(tag.name)}
                     alt={tag.name}
@@ -45,10 +61,10 @@ export function QuestionCard({ data }: { data: Question }) {
             <Button variant='ghost' asChild>
               <Link
                 className='flex items-center gap-1 py-1'
-                href={joinUrl(ROUTES.profiles, data.creator.id.toString())}
+                href={joinUrl(ROUTES.profiles, data.creator._id)}
               >
                 <Avatar size='sm'>
-                  <AvatarImage src={data.creator.image} />
+                  <AvatarImage src={data.creator.avatar} />
                 </Avatar>
                 {data.creator.name}
               </Link>

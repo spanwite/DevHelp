@@ -5,7 +5,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { QuestionCard } from '@/components/question';
 import { findQuestions } from '@/lib/actions/question';
-import { SearchAlert } from 'lucide-react';
+import ThemeImage from '@/components/utils/ThemeImage';
 
 export const metadata: Metadata = {
   title: 'DevExchange',
@@ -27,12 +27,74 @@ export default async function Home({
 }) {
   const { query, filter, page = 1, limit = 10 } = await searchParams;
 
-  const data = await findQuestions({
-    page: Number(page),
-    limit: Number(limit),
-    query,
-    filter,
-  });
+  const content = await (async () => {
+    try {
+      const { questions } = await findQuestions({
+        page: Number(page),
+        limit: Number(limit),
+        query,
+        filter,
+      });
+
+      if (questions.length === 0) {
+        return (
+          <div className='mx-auto mt-8 flex max-w-sm flex-col items-center gap-4'>
+            <ThemeImage
+              srcLight='/auth-light.svg'
+              srcDark='/auth-dark.svg'
+              alt='Error illustration'
+              width={270}
+              height={200}
+            />
+            <h2 className='mt-2 text-2xl font-bold'>
+              There’s no question to show
+            </h2>
+            <p>
+              Be the first to break the silence! 🚀 Ask a Question and kickstart
+              the discussion. our query could be the next big thing others learn
+              from. Get involved! 💡
+            </p>
+            <Button variant='gradient-accent' size='lg' asChild>
+              <Link href={ROUTES.askQuestion}>Ask a Question</Link>
+            </Button>
+          </div>
+        );
+      }
+
+      return (
+        <ul className='grid gap-6'>
+          {questions.map((question) => (
+            <li key={question._id}>
+              <QuestionCard data={question} />
+            </li>
+          ))}
+        </ul>
+      );
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'Unhandled error happened while retrieving questions...';
+      return (
+        <div className='mx-auto mt-8 flex max-w-sm flex-col items-center gap-3.5'>
+          <ThemeImage
+            srcLight='/error-light.svg'
+            srcDark='/error-dark.svg'
+            alt='Error illustration'
+            width={270}
+            height={200}
+          />
+          <h2 className='mt-2 text-2xl font-bold'>
+            Opps! Something Went Wrong
+          </h2>
+          <p>{message}</p>
+          <Button variant='secondary' size='lg' asChild>
+            <Link href={ROUTES.home}>Go back</Link>
+          </Button>
+        </div>
+      );
+    }
+  })();
 
   return (
     <section className='space-y-6'>
@@ -49,20 +111,7 @@ export default async function Home({
       </div>
       <UrlSearch placeholder='Search for questions...' />
       <UrlFilter items={filters} />
-      <ul className='grid gap-6'>
-        {data.questions.length > 0 ? (
-          data.questions.map((question) => (
-            <li key={question._id}>
-              <QuestionCard data={question} />
-            </li>
-          ))
-        ) : (
-          <p className='text-muted-foreground mt-4 flex items-center justify-center gap-1.5'>
-            <SearchAlert className='size-5' />
-            No questions found...
-          </p>
-        )}
-      </ul>
+      {content}
     </section>
   );
 }

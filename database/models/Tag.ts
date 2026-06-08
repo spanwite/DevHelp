@@ -1,13 +1,6 @@
-import { DocJSON } from '@/lib/mongodb';
 import mongoose from 'mongoose';
 
-export interface Tag {
-  name: string;
-  description?: string;
-  questionsCount: number;
-}
-
-const TagSchema = new mongoose.Schema<Tag>(
+const TagSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true },
     description: String,
@@ -16,15 +9,12 @@ const TagSchema = new mongoose.Schema<Tag>(
   { timestamps: true }
 );
 
-const Tag: mongoose.Model<Tag> =
-  mongoose.models.Tag || mongoose.model('Tag', TagSchema);
-
 export type TagDocument = mongoose.InferHydratedDocTypeFromSchema<
   typeof TagSchema
 >;
+export type TagRaw = mongoose.InferRawDocTypeFromSchema<typeof TagSchema>;
 
-export type TagObject = DocJSON<
-  mongoose.InferRawDocTypeFromSchema<typeof TagSchema>
->;
+const Tag: mongoose.Model<TagRaw> =
+  mongoose.models.Tag || mongoose.model('Tag', TagSchema);
 
 export default Tag;

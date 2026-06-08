@@ -20,7 +20,9 @@ const QuestionSchema = new mongoose.Schema(
   }
 );
 
-export type QuestionDocument = mongoose.InferSchemaType<typeof QuestionSchema>;
+export type QuestionDocument = mongoose.InferRawDocTypeFromSchema<
+  typeof QuestionSchema
+>;
 
 const Question: mongoose.Model<QuestionDocument> =
   mongoose.models.Question || mongoose.model('Question', QuestionSchema);

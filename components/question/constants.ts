@@ -73,3 +73,63 @@ export const tagAliases = [
   { name: 'Apollo', alias: ['apollo'] },
   { name: 'Prisma', alias: ['prisma'] },
 ];
+
+export const tagDescriptions: Record<string, string> = {
+  JavaScript:
+    'A flexible language for interactive web apps and server-side code.',
+  TypeScript: 'A typed superset of JavaScript that adds compile-time safety.',
+  Python:
+    'A readable general-purpose language used for scripting, web, and data work.',
+  Go: 'A compiled language known for simplicity, concurrency, and fast builds.',
+  Java: 'A class-based language used for backend services and large-scale applications.',
+  C: 'A low-level systems language that gives direct control over memory and hardware.',
+  'C++':
+    'A powerful systems language with object-oriented and generic programming features.',
+  Rust: 'A memory-safe systems language focused on performance and reliability.',
+  Ruby: 'A dynamic language that emphasizes developer happiness and productivity.',
+  PHP: 'A widely used language for server-side web development.',
+  JSON: 'A lightweight data format used to structure and exchange information.',
+  Bash: 'A shell scripting language for automating commands in Unix-like systems.',
+  YAML: 'A human-friendly configuration format commonly used for settings and CI files.',
+  HTML: 'The markup language that defines the structure of web pages.',
+  CSS: 'The style sheet language used to control the presentation of web pages.',
+  SQL: 'A language for querying and managing relational databases.',
+  Kotlin:
+    'A modern JVM language used for Android, backend, and multiplatform apps.',
+  Swift: 'A language for building apps across Apple platforms.',
+  Markdown: 'A lightweight markup syntax for writing formatted text.',
+  'Node.js':
+    'A JavaScript runtime for building server-side and tooling applications.',
+  NPM: 'The default package manager and registry workflow for the Node.js ecosystem.',
+  Yarn: 'A fast, deterministic package manager for JavaScript projects.',
+  pnpm: 'A space-efficient package manager that stores packages in a shared content-addressed store.',
+  Bun: 'A fast JavaScript runtime, package manager, and bundler.',
+  Vite: 'A modern build tool and dev server for frontend projects.',
+  Webpack: 'A module bundler for assembling web application assets.',
+  Rollup: 'A bundler optimized for packaging libraries and smaller bundles.',
+  Parcel: 'A zero-config bundler for web applications and assets.',
+  esbuild: 'An extremely fast JavaScript bundler and minifier.',
+  React: 'A UI library for building component-based interfaces.',
+  Svelte:
+    'A compiler-driven frontend framework that shifts work to build time.',
+  Vue: 'A progressive framework for building user interfaces.',
+  Angular: 'A full-featured frontend framework for large web applications.',
+  'Next.js':
+    'A React framework for routing, rendering, and full-stack web apps.',
+  Nuxt: 'A framework for building Vue applications with routing and server features.',
+  Remix:
+    'A web framework centered on nested routing and server-first data loading.',
+  Astro: 'A framework for content-focused sites with partial hydration.',
+  'Tailwind CSS': 'A utility-first CSS framework for rapid interface styling.',
+  PostCSS: 'A tool for transforming CSS with plugins.',
+  Deno: 'A modern JavaScript and TypeScript runtime with secure defaults.',
+  Electron: 'A framework for building desktop apps with web technologies.',
+  Vercel:
+    'A deployment platform optimized for frontend and full-stack web apps.',
+  Netlify: 'A platform for building, deploying, and hosting web projects.',
+  Redux: 'A predictable state container for JavaScript applications.',
+  MobX: 'A state management library built around observable data.',
+  GraphQL: 'A query language and runtime for APIs.',
+  Apollo: 'An ecosystem for building and consuming GraphQL APIs.',
+  Prisma: 'A modern ORM and database toolkit for TypeScript and Node.js.',
+};

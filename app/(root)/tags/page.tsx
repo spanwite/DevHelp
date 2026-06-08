@@ -4,6 +4,12 @@ import { ROUTES } from '@/lib/constants';
 import Link from 'next/link';
 import ThemeImage from '@/components/utils/ThemeImage';
 import { findManyTags } from '@/lib/actions/tag';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { getDeviconUrl, joinUrl } from '@/lib/utils';
+import { data } from '../data';
+import MaybeImage from '@/components/utils/MaybeImage.server';
+import { tagDescriptions } from '@/components/question/constants';
+import TagCard from '@/components/TagCard';
 
 const filters = [
   { name: 'Most Popular', value: 'popular' },
@@ -53,10 +59,10 @@ export default async function TagsPage({
       }
 
       return (
-        <ul className='grid gap-6'>
+        <ul className='flex flex-wrap gap-6'>
           {tags.map((tag) => (
-            <li key={tag._id}>
-              <div>{tag.name}</div>
+            <li key={tag._id} className='max-w-56'>
+              <TagCard data={tag} />
             </li>
           ))}
         </ul>
@@ -90,15 +96,7 @@ export default async function TagsPage({
   return (
     <section className='space-y-6'>
       <div className='flex flex-wrap items-center justify-between gap-4'>
-        <h1 className='text-3xl font-bold'>All Questions</h1>
-        <Button
-          variant='gradient-accent'
-          size='lg'
-          className='max-xs:flex-1'
-          asChild
-        >
-          <Link href={ROUTES.askQuestion}>Ask a Question</Link>
-        </Button>
+        <h1 className='text-3xl font-bold'>All Tags</h1>
       </div>
       <UrlSearch placeholder='Search for questions...' />
       <UrlFilter items={filters} />

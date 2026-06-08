@@ -70,7 +70,9 @@ export function QuestionForm({
       }
 
       const newTag =
-        tagAliases.find((lang) => lang.alias.includes(tagInput))?.name ?? null;
+        tagAliases.find((lang) =>
+          lang.alias.some((alias) => alias === tagInput)
+        )?.name ?? null;
       if (!newTag) {
         form.setError('tags', {
           type: 'manual',

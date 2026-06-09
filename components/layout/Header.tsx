@@ -3,9 +3,10 @@ import { Logo } from '../ui/Logo';
 import { NavSheet } from '../navigation';
 import { ThemeSwitcher } from '../theme';
 import { Input } from '../ui/input';
-import { UserNav } from '../navigation/UserNav';
+import { UserAvatar } from '../UserAvatar';
 import { auth } from '@/auth';
 import { ROUTES } from '@/lib/constants';
+import Link from 'next/link';
 
 export async function Header() {
   const session = await auth();
@@ -25,11 +26,9 @@ export async function Header() {
         <ThemeSwitcher />
         <NavSheet />
         {session?.user?.id && (
-          <UserNav
-            href={ROUTES.profile(session.user.id)}
-            name={session.user.name || ''}
-            image={session.user.image || ''}
-          />
+          <Link href={ROUTES.profile(session.user.id)}>
+            <UserAvatar name={session.user.name} image={session.user.image} />
+          </Link>
         )}
       </div>
     </header>

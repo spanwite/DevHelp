@@ -20,11 +20,11 @@ const QuestionSchema = new mongoose.Schema(
   }
 );
 
-export type QuestionDocument = mongoose.InferRawDocTypeFromSchema<
-  typeof QuestionSchema
->;
+export type QuestionRaw = mongoose.InferSchemaType<typeof QuestionSchema>;
+export type QuestionDocument = mongoose.HydratedDocument<QuestionRaw>;
+export type QuestionJson = QuestionRaw & { _id: string };
 
-const Question: mongoose.Model<QuestionDocument> =
-  mongoose.models.Question || mongoose.model('Question', QuestionSchema);
+const Question: mongoose.Model<QuestionRaw> =
+  mongoose.models.Question || mongoose.model<QuestionRaw>('Question', QuestionSchema);
 
 export default Question;

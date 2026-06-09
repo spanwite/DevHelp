@@ -74,6 +74,53 @@ export function unifyUsername(username: string, unifiedPartLength = 5): string {
   return `${username}-${nanoid(unifiedPartLength)}`;
 }
 
-export function formatUsername(username: string): string {
-  
+export function formatUsername(username: string): string {}
+
+/**
+ * Type-safe result for async operations
+ * Discriminated union: success case has data, error case has error
+ */
+type SafeAsyncResult<T, E = Error> =
+  | { success: true; data: T }
+  | { success: false; error: E };
+
+/**
+ * Safely execute an async function and return typed result
+ * Eliminates repetitive try-catch blocks in server components
+ *
+ * @param fn - Async function to execute
+ * @returns Discriminated union with success flag and either data or error
+ *
+ * @example
+ * const result = await safeAsync(() => findQuestionsByTag(id, options));
+ * if (result.success) {
+ *   return <QuestionList data={result.data} />;
+ * } else {
+ *   return <ErrorDisplay error={result.error} />;
+ * }
+ */
+export async function safeAsync<T>(
+  fn: () => Promise<T>
+): Promise<SafeAsyncResult<T>> {
+  try {
+    const data = await fn();
+    return { success: true, data } as const;
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error : new Error(String(error)),
+    } as const;
+  }
+}
+
+/**
+ * Extract user-friendly error message
+ */
+export function getErrorMessage(
+  error: unknown,
+  fallback = 'An unexpected error occurred'
+): string {
+  if (error instanceof Error) return error.message;
+  if (typeof error === 'string') return error;
+  return fallback;
 }

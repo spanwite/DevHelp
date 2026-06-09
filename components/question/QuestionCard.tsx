@@ -3,12 +3,12 @@ import { getDeviconUrl, joinUrl } from '@/lib/utils';
 import { Dot, Eye, MessageCircle, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
 import { format } from 'timeago.js';
-import { Avatar, AvatarImage } from '../ui/avatar';
 import { Card, CardContent, CardHeader } from '../ui/card';
 import { Metric } from '../ui/Metric';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import MaybeImage from '../utils/MaybeImage.server';
+import { UserAvatar } from '../UserAvatar';
 
 interface Props {
   data: {
@@ -21,7 +21,7 @@ interface Props {
     creator: {
       _id: string;
       name: string;
-      avatar: string;
+      avatar?: string | null;
     };
     createdAt: Date;
     upvotes: number;
@@ -63,9 +63,11 @@ export function QuestionCard({ data }: Props) {
                 className='flex items-center gap-1 py-1'
                 href={joinUrl(ROUTES.profiles, data.creator._id)}
               >
-                <Avatar size='sm'>
-                  <AvatarImage src={data.creator.avatar} />
-                </Avatar>
+                <UserAvatar
+                  image={data.creator.avatar}
+                  name={data.creator.name}
+                  size='sm'
+                />
                 {data.creator.name}
               </Link>
             </Button>

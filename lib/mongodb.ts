@@ -22,9 +22,7 @@ export type FlattenObjectIds<T> = T extends object
   ? {
       [K in keyof T]: T[K] extends mongoose.Types.ObjectId
         ? string
-        : T extends NativeDate
-          ? string
-          : FlattenObjectIds<T[K]>;
+        : FlattenObjectIds<T[K]>;
     }
   : T;
 

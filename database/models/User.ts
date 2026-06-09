@@ -1,18 +1,6 @@
 import mongoose from 'mongoose';
 
-export interface User {
-  name: string;
-  username: string;
-  email: string;
-  password?: string;
-  avatar?: string;
-  location?: string;
-  website?: string;
-  bio?: string;
-  reputation?: number;
-}
-
-const UserSchema = new mongoose.Schema<User>(
+const UserSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     username: { type: String, required: true, unique: true },
@@ -27,11 +15,11 @@ const UserSchema = new mongoose.Schema<User>(
   { timestamps: true }
 );
 
-export type UserDocument = mongoose.InferHydratedDocTypeFromSchema<
-  typeof UserSchema
->;
+export type UserRaw = mongoose.InferSchemaType<typeof UserSchema>;
+export type UserDocument = mongoose.HydratedDocument<UserRaw>;
+export type UserJson = UserRaw & { _id: string };
 
-const User: mongoose.Model<User> =
-  mongoose.models.User || mongoose.model<User>('User', UserSchema);
+const User: mongoose.Model<UserRaw> =
+  mongoose.models.User || mongoose.model<UserRaw>('User', UserSchema);
 
 export default User;

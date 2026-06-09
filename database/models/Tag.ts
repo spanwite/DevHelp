@@ -9,12 +9,11 @@ const TagSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export type TagDocument = mongoose.InferHydratedDocTypeFromSchema<
-  typeof TagSchema
->;
-export type TagRaw = mongoose.InferRawDocTypeFromSchema<typeof TagSchema>;
+export type TagRaw = mongoose.InferSchemaType<typeof TagSchema>;
+export type TagDocument = mongoose.HydratedDocument<TagRaw>;
+export type TagJson = TagRaw & { _id: string };
 
 const Tag: mongoose.Model<TagRaw> =
-  mongoose.models.Tag || mongoose.model('Tag', TagSchema);
+  mongoose.models.Tag || mongoose.model<TagRaw>('Tag', TagSchema);
 
 export default Tag;

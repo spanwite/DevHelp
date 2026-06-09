@@ -4,11 +4,6 @@ import { ROUTES } from '@/lib/constants';
 import Link from 'next/link';
 import ThemeImage from '@/components/utils/ThemeImage';
 import { findManyTags } from '@/lib/actions/tag';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { getDeviconUrl, joinUrl } from '@/lib/utils';
-import { data } from '../data';
-import MaybeImage from '@/components/utils/MaybeImage.server';
-import { tagDescriptions } from '@/components/question/constants';
 import TagCard from '@/components/TagCard';
 
 const filters = [

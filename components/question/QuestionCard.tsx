@@ -9,6 +9,7 @@ import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import MaybeImage from '../utils/MaybeImage.server';
 import { UserAvatar } from '../UserAvatar';
+import { TagList } from '../TagCard';
 
 interface Props {
   data: {
@@ -39,23 +40,7 @@ export function QuestionCard({ data }: Props) {
         </Link>
       </CardHeader>
       <CardContent className='space-y-6'>
-        <ul className='flex flex-wrap gap-2'>
-          {data.tags.map((tag) => (
-            <li key={tag._id}>
-              <Badge variant='secondary' asChild>
-                <Link href={ROUTES.tag(tag._id)}>
-                  <MaybeImage
-                    src={getDeviconUrl(tag.name)}
-                    alt={tag.name}
-                    width={14}
-                    height={14}
-                  />
-                  <span>{tag.name}</span>
-                </Link>
-              </Badge>
-            </li>
-          ))}
-        </ul>
+        <TagList data={data.tags} />
         <div className='flex flex-wrap items-center justify-between gap-x-2 gap-y-3'>
           <div className='flex flex-wrap items-center'>
             <Button variant='ghost' asChild>

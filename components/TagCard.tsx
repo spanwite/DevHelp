@@ -4,9 +4,10 @@ import { tagDescriptions } from './question/constants';
 import { Card, CardHeader, CardContent } from './ui/card';
 import MaybeImage from './utils/MaybeImage.server';
 import Link from 'next/link';
+import { Badge } from './ui/badge';
 
 export default function TagCard({
-  data: { _id, name, questionsCount },
+  data,
 }: {
   data: {
     _id: string;
@@ -14,6 +15,8 @@ export default function TagCard({
     questionsCount: number;
   };
 }) {
+  const { _id, name, questionsCount } = data;
+
   return (
     <Card className='h-full gap-2'>
       <CardHeader className='font-bold'>
@@ -41,5 +44,33 @@ export default function TagCard({
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+export function Tag({ data }: { data: { _id: string; name: string } }) {
+  return (
+    <Badge variant='secondary' asChild>
+      <Link href={ROUTES.tag(data._id)}>
+        <MaybeImage
+          src={getDeviconUrl(data.name)}
+          alt={data.name}
+          width={14}
+          height={14}
+        />
+        <span>{data.name}</span>
+      </Link>
+    </Badge>
+  );
+}
+
+export function TagList({ data }: { data: { _id: string; name: string }[] }) {
+  return (
+    <ul className='flex flex-wrap gap-2'>
+      {data.map((tag) => (
+        <li key={tag._id}>
+          <Tag data={tag} />
+        </li>
+      ))}
+    </ul>
   );
 }

@@ -143,7 +143,9 @@ export async function updateQuestionById(
 export async function findQuestionById(questionId: string) {
   await dbConnect();
 
-  const question = await Question.findById(questionId);
+  const question = await Question.findById(questionId).populate<{
+    creator: { _id: string; name: string; avatar: string };
+  }>('creator', 'name avatar');
   if (!question) {
     return null;
   }
@@ -154,7 +156,9 @@ export async function findQuestionById(questionId: string) {
 
   return {
     ...question.toObject({ flattenObjectIds: true }),
-    tags: questionTags.map((tag) => tag.tagId.name),
+    tags: questionTags.map((tag) =>
+      tag.tagId.toObject({ flattenObjectIds: true })
+    ),
   };
 }
 

@@ -1,7 +1,7 @@
 .prose {
   p,
   li {
-    @apply my-2;
+    @apply my-4;
   }
 
   h1,
@@ -52,5 +52,13 @@
 
   blockquote {
     @apply border-input my-4 border-l-2 pl-4 italic;
+  }
+
+  *:first-child {
+    @apply mt-0!;
+  }
+
+  *:last-child {
+    @apply mb-0!;
   }
 }

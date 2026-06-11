@@ -1,7 +1,9 @@
+import { AnswerForm } from '@/components/AnswerForm';
 import Preview from '@/components/Preview';
 import { TagList } from '@/components/TagCard';
 import { Button } from '@/components/ui/button';
 import { Metric } from '@/components/ui/Metric';
+import { Separator } from '@/components/ui/separator';
 import { UserAvatar } from '@/components/UserAvatar';
 import { findQuestionById, viewQuestionById } from '@/lib/actions/question';
 import { ROUTES } from '@/lib/constants';
@@ -91,6 +93,8 @@ export default async function QuestionsPage({
       </header>
       <Preview content={data.description} />
       <TagList data={tags} />
+      <Separator className='-my-2' />
+      <AnswerForm />
     </div>
   );
 }

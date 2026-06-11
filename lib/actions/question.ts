@@ -229,3 +229,15 @@ export async function findQuestions({
     hasNextPage: skip + questions.length < totalQuestions,
   };
 }
+
+export async function viewQuestionById(questionId: string) {
+  await dbConnect();
+
+  const question = await Question.findByIdAndUpdate(
+    questionId,
+    { $inc: { views: 1 } },
+    { returnDocument: 'after' }
+  ).select('views');
+
+  return question ? { views: question.views } : null;
+}

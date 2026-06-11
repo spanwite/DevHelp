@@ -3,7 +3,7 @@ import { TagList } from '@/components/TagCard';
 import { Button } from '@/components/ui/button';
 import { Metric } from '@/components/ui/Metric';
 import { UserAvatar } from '@/components/UserAvatar';
-import { findQuestionById } from '@/lib/actions/question';
+import { findQuestionById, viewQuestionById } from '@/lib/actions/question';
 import { ROUTES } from '@/lib/constants';
 import { safeAsync } from '@/lib/utils';
 import {
@@ -16,6 +16,7 @@ import {
   ThumbsUp,
 } from 'lucide-react';
 import Link from 'next/link';
+import { after } from 'next/server';
 import * as timeago from 'timeago.js';
 
 export default async function QuestionsPage({
@@ -24,6 +25,8 @@ export default async function QuestionsPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+
+  after(() => viewQuestionById(id));
 
   const response = await safeAsync(() => findQuestionById(id));
 

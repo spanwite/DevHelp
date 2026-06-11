@@ -13,7 +13,9 @@ export default function Preview({ content }: { content: string }) {
       <MDXRemote
         source={content}
         components={{
-          pre: (props) => <Code {...props} className='text-sm' lineNumbers />,
+          pre: (props) => (
+            <Code {...props} className='bright-code' lineNumbers />
+          ),
         }}
       />
     </div>

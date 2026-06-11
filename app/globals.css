@@ -152,6 +152,9 @@
   html {
     @apply font-sans;
   }
+  :has(.bright-code) {
+    min-width: 0;
+  }
 }
 
 @import './markdown.css';
